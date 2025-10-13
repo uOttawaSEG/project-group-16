@@ -1,10 +1,10 @@
 package com.example.otams.model;
 
-public class User {
+public abstract class User {
     private String email;
     private String password;
 
-    public User(String emial, String password) {
+    public User(String email, String password) {
         this.email = email;
         this.password = password;
     }
