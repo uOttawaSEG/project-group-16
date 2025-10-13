@@ -36,7 +36,8 @@
         android:inputType="textPassword"
         android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
-        tools:layout_editor_absoluteX="65dp" />
+        tools:layout_editor_absoluteX="65dp"
+        tools:ignore="LabelFor,MissingConstraints" />
 
     <TextView
         android:id="@+id/textView2"
