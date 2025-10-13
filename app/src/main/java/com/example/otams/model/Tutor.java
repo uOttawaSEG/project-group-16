@@ -1,8 +1,8 @@
 package com.example.otams.model;
 
-import java.unit.List;
+import java.util.List;
 public class Tutor extends User {
-    private String fistName;
+    private String firstName;
     private String lastName;
     private String phoneNumber;
     private String highestDegree;
@@ -10,7 +10,7 @@ public class Tutor extends User {
 
     public Tutor(String firstName,String lastName, String phoneNumber, String highestDegree, List<String> coursesOffered, String email, String password) {
         super(email, password);
-        this.fistName = firstName;
+        this.firstName = firstName;
         this.lastName = lastName;
         this.phoneNumber = phoneNumber;
         this.highestDegree = highestDegree;
