@@ -82,19 +82,6 @@
         tools:layout_editor_absoluteX="40dp"
         tools:layout_editor_absoluteY="303dp" />
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/Civil Eng"
-        android:layout_width="409dp"
-        android:layout_height="wrap_content"
-        tools:layout_editor_absoluteX="1dp"
-        tools:layout_editor_absoluteY="555dp">
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Chemistry" />
-    </com.google.android.material.textfield.TextInputLayout>
-
     <TextView
         android:id="@+id/textView14"
         android:layout_width="wrap_content"
@@ -111,4 +98,17 @@
         android:text="Register"
         tools:layout_editor_absoluteX="39dp"
         tools:layout_editor_absoluteY="660dp" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/programOfStudy"
+        android:layout_width="409dp"
+        android:layout_height="wrap_content"
+        tools:layout_editor_absoluteX="1dp"
+        tools:layout_editor_absoluteY="569dp">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="chemistry" />
+    </com.google.android.material.textfield.TextInputLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

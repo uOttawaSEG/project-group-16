@@ -17,19 +17,6 @@
         tools:layout_editor_absoluteY="251dp" />
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/Civil Eng"
-        android:layout_width="409dp"
-        android:layout_height="wrap_content"
-        tools:layout_editor_absoluteX="1dp"
-        tools:layout_editor_absoluteY="498dp">
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Masters" />
-    </com.google.android.material.textfield.TextInputLayout>
-
-    <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/lastName"
         android:layout_width="409dp"
         android:layout_height="wrap_content"
@@ -122,6 +109,7 @@
         tools:layout_editor_absoluteY="566dp" />
 
     <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/coursesOffered"
         android:layout_width="409dp"
         android:layout_height="wrap_content"
         tools:layout_editor_absoluteX="1dp"
@@ -132,5 +120,18 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="math,chemistry..." />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/highestDegree"
+        android:layout_width="409dp"
+        android:layout_height="wrap_content"
+        tools:layout_editor_absoluteX="1dp"
+        tools:layout_editor_absoluteY="491dp">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Masters" />
     </com.google.android.material.textfield.TextInputLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
