@@ -6,8 +6,6 @@ public final class Administrator {
 
     private Administrator() {
     }
-    public class Administrator {
-
         /** Quick check that admin login is valid */
         public static boolean isAdminValid(String email, String password) {
             if (email == null || password == null) return false;

@@ -32,4 +32,8 @@ public class Tutor extends User {
     public List<String> getCoursesOffered() {
         return coursesOffered;
     }
+
+    public static String roleLabel() {
+        return "Tutor";
+    }
 }
