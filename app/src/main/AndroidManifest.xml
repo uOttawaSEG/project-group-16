@@ -12,6 +12,10 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.OTAMS">
         <activity
+            android:name=".LoginActivity"
+            android:exported="false"
+            android:theme="@style/Theme.OTAMS" />
+        <activity
             android:name=".MainActivity"
             android:exported="true">
             <intent-filter>
