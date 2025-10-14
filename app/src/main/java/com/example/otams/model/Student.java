@@ -26,4 +26,7 @@ public class Student extends User {
     public String getProgramOfStudy() {
         return programOfStudy;
     }
+    public static String roleLabel() {
+        return "Student";
+    }
 }
