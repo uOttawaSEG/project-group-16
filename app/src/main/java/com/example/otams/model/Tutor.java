@@ -9,7 +9,7 @@ public class Tutor extends User {
     private List<String> coursesOffered;
 
     public Tutor(String firstName,String lastName, String phoneNumber, String highestDegree, List<String> coursesOffered, String email, String password) {
-        super(email, password);
+        super(email, password, "Tutor");
         this.firstName = firstName;
         this.lastName = lastName;
         this.phoneNumber = phoneNumber;
