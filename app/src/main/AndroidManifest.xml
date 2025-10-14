@@ -12,6 +12,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.OTAMS">
         <activity
+            android:name=".WelcomescreenActivity"
+            android:exported="false" />
+        <activity
             android:name=".TutorregActivity"
             android:exported="false" />
         <activity
