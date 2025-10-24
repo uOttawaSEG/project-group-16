@@ -1,8 +1,0 @@
-<resources>
-    <string name="app_name">OTAMS</string>
-    <string name="student">Student</string>
-    <string name="tutor">Tutor</string>
-    <string name="administrator">Administrator</string>
-    <string name="user_type">User Type</string>
-    <string name="login">login</string>
-</resources>
