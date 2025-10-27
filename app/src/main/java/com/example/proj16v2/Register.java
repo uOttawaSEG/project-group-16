@@ -40,7 +40,7 @@ public class Register extends AppCompatActivity {
 
         studentButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
-                Intent intent = new Intent(Register.this, Student.class);
+                Intent intent = new Intent(Register.this, RegisterStudent.class);
                 intent.putExtra("UserType","student");
                 startActivity(intent);
             }

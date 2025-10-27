@@ -5,7 +5,7 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Student">
+    tools:context=".RegisterStudent">
 
     <com.google.android.material.textfield.TextInputLayout
         android:layout_width="409dp"
@@ -82,5 +82,13 @@
         android:hint="Program of Study"
         tools:layout_editor_absoluteX="-1dp"
         tools:layout_editor_absoluteY="503dp" />
+
+    <Button
+        android:id="@+id/submitStudentButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Submit"
+        tools:layout_editor_absoluteX="159dp"
+        tools:layout_editor_absoluteY="581dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

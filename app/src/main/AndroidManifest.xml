@@ -18,7 +18,7 @@
             android:name=".RegisterTutor"
             android:exported="false" />
         <activity
-            android:name=".Student"
+            android:name=".RegisterStudent"
             android:exported="false" />
         <activity
             android:name=".Register"
