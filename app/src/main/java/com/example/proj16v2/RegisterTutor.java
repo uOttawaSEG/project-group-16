@@ -1,6 +1,8 @@
 package com.example.proj16v2;
 
 import android.os.Bundle;
+import android.widget.Button;
+import android.widget.EditText;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -10,7 +12,12 @@ import androidx.core.view.WindowInsetsCompat;
 
 public class RegisterTutor extends AppCompatActivity {
 
-
+    //private DatabaseHelper dbHelper;
+    // private ArrayList<String> userData;
+    private Button submitTutorButton;
+    private EditText firstNameTutor, lastNameTutor, emailTutor, phoneNumberTutor, passwordTutor, confirmPasswordTutor,
+            highestDegreeTutor, coursesOfferedTutor;
+    private String registrationStatus;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,5 +29,7 @@ public class RegisterTutor extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+
+
     }
 }
