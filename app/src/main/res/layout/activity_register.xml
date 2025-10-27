@@ -7,4 +7,26 @@
     android:layout_height="match_parent"
     tools:context=".Register">
 
+    <Button
+        android:id="@+id/tutorbutton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Tutor"
+        tools:layout_editor_absoluteX="87dp"
+        tools:layout_editor_absoluteY="369dp" />
+
+    <Button
+        android:id="@+id/studentbutton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Student"
+        tools:layout_editor_absoluteX="240dp"
+        tools:layout_editor_absoluteY="369dp" />
+
+    <Space
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toStartOf="@+id/studentbutton"
+        tools:layout_editor_absoluteY="178dp" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
