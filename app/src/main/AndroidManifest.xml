@@ -15,7 +15,7 @@
             android:name=".LogIn"
             android:exported="false" />
         <activity
-            android:name=".Tutor"
+            android:name=".RegisterTutor"
             android:exported="false" />
         <activity
             android:name=".Student"
