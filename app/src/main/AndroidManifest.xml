@@ -12,6 +12,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Proj16v2">
         <activity
+            android:name=".LogIn"
+            android:exported="false" />
+        <activity
             android:name=".Tutor"
             android:exported="false" />
         <activity
