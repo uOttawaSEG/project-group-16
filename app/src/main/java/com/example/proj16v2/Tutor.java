@@ -1,36 +1,24 @@
 package com.example.proj16v2;
 
-import java.util.List;
+import android.os.Bundle;
 
-public class Tutor extends User {
-    private String firstName;
-    private String lastName;
-    private String phoneNumber;
-    private String highestDegree;
-    private List<String> coursesOffered;
+import androidx.activity.EdgeToEdge;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.graphics.Insets;
+import androidx.core.view.ViewCompat;
+import androidx.core.view.WindowInsetsCompat;
 
-    public Tutor(String firstName, String lastName, String phoneNumber, String highestDegree, List<String> coursesOffered, String email, String password) {
-        super(email, password);
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.phoneNumber = phoneNumber;
-        this.highestDegree = highestDegree;
-        this.coursesOffered = coursesOffered;
-    }
+public class Tutor extends AppCompatActivity {
 
-    public String getFirstName() {
-        return firstName;
-    }
-    public String getLastName() {
-        return lastName;
-    }
-    public String getPhoneNumber() {
-        return phoneNumber;
-    }
-    public String getHighestDegree() {
-        return highestDegree;
-    }
-    public List<String> getCoursesOffered() {
-        return coursesOffered;
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        EdgeToEdge.enable(this);
+        setContentView(R.layout.activity_tutor);
+        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
+            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
+            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
+            return insets;
+        });
     }
 }
