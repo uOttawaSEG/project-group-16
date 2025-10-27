@@ -7,4 +7,80 @@
     android:layout_height="match_parent"
     tools:context=".Student">
 
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_width="409dp"
+        android:layout_height="wrap_content"
+        tools:layout_editor_absoluteX="1dp"
+        tools:layout_editor_absoluteY="178dp">
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputEditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="First Name"
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteY="101dp" />
+
+    <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/editText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Last Name"
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteY="187dp" />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Student Form"
+        tools:layout_editor_absoluteX="163dp"
+        tools:layout_editor_absoluteY="40dp" />
+
+    <EditText
+        android:id="@+id/editTextTextEmailAddress"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="Email (username)"
+        android:inputType="textEmailAddress"
+        tools:layout_editor_absoluteX="100dp"
+        tools:layout_editor_absoluteY="253dp" />
+
+    <EditText
+        android:id="@+id/editTextTextPassword2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="Password"
+        android:inputType="textPassword"
+        tools:layout_editor_absoluteX="100dp"
+        tools:layout_editor_absoluteY="318dp" />
+
+    <EditText
+        android:id="@+id/editTextPhone"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="Phone Number"
+        android:inputType="phone"
+        tools:layout_editor_absoluteX="100dp"
+        tools:layout_editor_absoluteY="384dp" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_width="409dp"
+        android:layout_height="wrap_content"
+        tools:layout_editor_absoluteX="1dp"
+        tools:layout_editor_absoluteY="460dp">
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputEditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Program of Study"
+        tools:layout_editor_absoluteX="-1dp"
+        tools:layout_editor_absoluteY="503dp" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
