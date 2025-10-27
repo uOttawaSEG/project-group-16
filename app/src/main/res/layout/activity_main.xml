@@ -18,11 +18,11 @@
         app:layout_constraintVertical_bias="0.278" />
 
     <Button
-        android:id="@+id/signUpButton"
+        android:id="@+id/registerButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="24dp"
-        android:text="Sign Up"
+        android:text="Register"
         app:layout_constraintBottom_toTopOf="@+id/loginButton"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />

@@ -8,7 +8,7 @@
     tools:context=".Register">
 
     <Button
-        android:id="@+id/tutorbutton"
+        android:id="@+id/tutorButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Tutor"
@@ -16,7 +16,7 @@
         tools:layout_editor_absoluteY="369dp" />
 
     <Button
-        android:id="@+id/studentbutton"
+        android:id="@+id/studentButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Student"
@@ -26,7 +26,7 @@
     <Space
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintEnd_toStartOf="@+id/studentbutton"
+        app:layout_constraintEnd_toStartOf="@+id/studentButton"
         tools:layout_editor_absoluteY="178dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
