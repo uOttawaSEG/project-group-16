@@ -7,6 +7,76 @@
     android:layout_height="match_parent"
     tools:context=".RegisterStudent">
 
+    <EditText
+        android:id="@+id/confirmPasswordStudent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="text"
+        android:text=" Confirm Password"
+        tools:layout_editor_absoluteX="100dp"
+        tools:layout_editor_absoluteY="516dp" />
+
+    <EditText
+        android:id="@+id/passwordStudent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="text"
+        android:text="Password"
+        tools:layout_editor_absoluteX="100dp"
+        tools:layout_editor_absoluteY="463dp" />
+
+    <EditText
+        android:id="@+id/programOfStudyStudent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="text"
+        android:text="Program of Study"
+        tools:layout_editor_absoluteX="100dp"
+        tools:layout_editor_absoluteY="335dp" />
+
+    <EditText
+        android:id="@+id/emailStudent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="text"
+        android:text="Email (username)"
+        tools:layout_editor_absoluteX="100dp"
+        tools:layout_editor_absoluteY="401dp" />
+
+    <EditText
+        android:id="@+id/phoneNumberStudent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="text"
+        android:text="Phone Number"
+        tools:layout_editor_absoluteX="100dp"
+        tools:layout_editor_absoluteY="271dp" />
+
+    <EditText
+        android:id="@+id/firstNameStudent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="text"
+        android:text="First Name"
+        tools:layout_editor_absoluteX="100dp"
+        tools:layout_editor_absoluteY="148dp" />
+
+    <EditText
+        android:id="@+id/lastNameStudent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="text"
+        android:text="Last Name"
+        tools:layout_editor_absoluteX="100dp"
+        tools:layout_editor_absoluteY="211dp" />
+
     <com.google.android.material.textfield.TextInputLayout
         android:layout_width="409dp"
         android:layout_height="wrap_content"
@@ -14,21 +84,6 @@
         tools:layout_editor_absoluteY="178dp">
 
     </com.google.android.material.textfield.TextInputLayout>
-
-    <com.google.android.material.textfield.TextInputEditText
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="First Name"
-        tools:layout_editor_absoluteX="0dp"
-        tools:layout_editor_absoluteY="101dp" />
-
-    <com.google.android.material.textfield.TextInputEditText
-        android:id="@+id/editText"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Last Name"
-        tools:layout_editor_absoluteX="0dp"
-        tools:layout_editor_absoluteY="187dp" />
 
     <TextView
         android:id="@+id/textView"
@@ -38,50 +93,13 @@
         tools:layout_editor_absoluteX="163dp"
         tools:layout_editor_absoluteY="40dp" />
 
-    <EditText
-        android:id="@+id/editTextTextEmailAddress"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:hint="Email (username)"
-        android:inputType="textEmailAddress"
-        tools:layout_editor_absoluteX="100dp"
-        tools:layout_editor_absoluteY="253dp" />
-
-    <EditText
-        android:id="@+id/editTextTextPassword2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:hint="Password"
-        android:inputType="textPassword"
-        tools:layout_editor_absoluteX="100dp"
-        tools:layout_editor_absoluteY="318dp" />
-
-    <EditText
-        android:id="@+id/editTextPhone"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:hint="Phone Number"
-        android:inputType="phone"
-        tools:layout_editor_absoluteX="100dp"
-        tools:layout_editor_absoluteY="384dp" />
-
     <com.google.android.material.textfield.TextInputLayout
         android:layout_width="409dp"
         android:layout_height="wrap_content"
         tools:layout_editor_absoluteX="1dp"
-        tools:layout_editor_absoluteY="460dp">
+        tools:layout_editor_absoluteY="474dp">
 
     </com.google.android.material.textfield.TextInputLayout>
-
-    <com.google.android.material.textfield.TextInputEditText
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Program of Study"
-        tools:layout_editor_absoluteX="-1dp"
-        tools:layout_editor_absoluteY="503dp" />
 
     <Button
         android:id="@+id/submitStudentButton"
@@ -89,6 +107,6 @@
         android:layout_height="wrap_content"
         android:text="Submit"
         tools:layout_editor_absoluteX="159dp"
-        tools:layout_editor_absoluteY="581dp" />
+        tools:layout_editor_absoluteY="637dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
