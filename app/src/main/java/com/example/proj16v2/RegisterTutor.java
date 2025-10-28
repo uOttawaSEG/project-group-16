@@ -17,7 +17,7 @@ import androidx.core.view.WindowInsetsCompat;
 
 public class RegisterTutor extends AppCompatActivity {
 
-    //private DatabaseHelper dbHelper;
+    private DatabaseHelper dbHelper;
     // private ArrayList<String> userData;
     private Button submitTutorButton;
     private EditText firstNameTutor, lastNameTutor, emailTutor, phoneNumberTutor, passwordTutor, confirmPasswordTutor,
@@ -45,7 +45,7 @@ public class RegisterTutor extends AppCompatActivity {
         confirmPasswordTutor = findViewById(R.id.confirmPasswordTutor);
         submitTutorButton = findViewById(R.id.submitTutorButton);
 
-        dbHelper=new DatabaseHelper(this);
+        dbHelper = new DatabaseHelper(this);
 
         submitTutorButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
@@ -62,7 +62,7 @@ public class RegisterTutor extends AppCompatActivity {
         String firstNameTutorString = firstNameTutor.getText().toString().trim();
         String lastNameTutorString = lastNameTutor.getText().toString().trim();
         String emailTutorString = emailTutor.getText().toString().trim();
-        String phoneNumberTutorString = phoneNumberTutor.getText().toString().trim();String addressString = address.getText().toString().trim();
+        String phoneNumberTutorString = phoneNumberTutor.getText().toString().trim();
         String passwordTutorString = passwordTutor.getText().toString().trim();
         String confirmPasswordTutorString = confirmPasswordTutor.getText().toString().trim();
         String highestDegreeTutorString = highestDegreeTutor.getText().toString().trim();
