@@ -13,8 +13,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String DATABASE_NAME = "OTAMS.db";
     private static final int DATABASE_VERSION = 1;
 
-    private static final String TABLE_EVENTS = "events";
-    private static final String COLUMN_TITLE = "title";
+    private static final String TABLE_APPOINTMENTS = "appointments";
     private static final String COLUMN_DATE = "date";
     private static final String COLUMN_TUTOR_EMAIL = "tutor_email";
 
@@ -42,22 +41,21 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.execSQL(createUsersTable);
 
 
-        String createEventsTable = "CREATE TABLE Events ("
-                + "event_id INTEGER PRIMARY KEY AUTOINCREMENT,"
+        String createAppointmentsTable = "CREATE TABLE Appointments ("
+                + "appointment_id INTEGER PRIMARY KEY AUTOINCREMENT,"
                 + "title TEXT NOT NULL, "
                 + "description TEXT NOT NULL, "
                 + "date TEXT NOT NULL ,"
                 + "start_time TEXT NOT NULL ,"
                 + "end_time TEXT NOT NULL, "
-                + "event_address TEXT NOT NULL ,"
-                + "eventState TEXT NOT NULL, "
+                + "appointment_location TEXT NOT NULL ,"
                 + "organizer_id INTEGER NOT NULL, "
                 + "isManualApproval INTEGER DEFAULT 0, "
                 + "FOREIGN KEY (organizer_id) REFERENCES Users(user_id) "
                 + ");";
 
 
-        db.execSQL(createEventsTable);
+        db.execSQL(createAppointmentsTable);
 
 
         String createEventStudentsTable = "CREATE TABLE EventStudents ("
