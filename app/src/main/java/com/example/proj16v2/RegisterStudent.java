@@ -110,7 +110,7 @@ public class RegisterStudent extends AppCompatActivity {
         }
 
         if (TextUtils.isEmpty(programOfStudyString)) {
-            programOfStudy.setError("Address is required");
+            programOfStudy.setError("Program of Study is required");
             return;
 
         }
