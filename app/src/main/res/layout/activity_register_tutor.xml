@@ -7,125 +7,95 @@
     android:layout_height="match_parent"
     tools:context=".RegisterTutor">
 
-    <EditText
-        android:id="@+id/passwordTutor"
-        android:layout_width="254dp"
-        android:layout_height="46dp"
-        android:layout_marginBottom="12dp"
-        android:ems="10"
-        android:hint="Password"
-        android:inputType="textPassword"
-        app:layout_constraintBottom_toTopOf="@+id/confirmPasswordTutor"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.503"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <EditText
-        android:id="@+id/phoneNumberTutor"
-        android:layout_width="261dp"
-        android:layout_height="52dp"
-        android:layout_marginBottom="12dp"
-        android:ems="10"
-        android:hint="Phone Number"
-        android:inputType="phone"
-        app:layout_constraintBottom_toTopOf="@+id/emailTutor"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.526"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <TextView
-        android:id="@+id/textView2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Tutor Form"
-        app:layout_constraintBottom_toTopOf="@+id/firstNameTutor"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:layout_editor_absoluteX="173dp" />
-
-    <Button
-        android:id="@+id/submitTutorButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Submit"
+    <LinearLayout
+        android:layout_width="376dp"
+        android:layout_height="683dp"
+        android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/confirmPasswordTutor" />
+        app:layout_constraintTop_toTopOf="parent">
 
-    <EditText
-        android:id="@+id/firstNameTutor"
-        android:layout_width="377dp"
-        android:layout_height="49dp"
-        android:ems="10"
-        android:inputType="text"
-        android:text="First Name"
-        app:layout_constraintBottom_toTopOf="@+id/lastNameTutor"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.47"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.949" />
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Tutor Form" />
 
-    <EditText
-        android:id="@+id/lastNameTutor"
-        android:layout_width="376dp"
-        android:layout_height="50dp"
-        android:layout_marginBottom="20dp"
-        android:ems="10"
-        android:inputType="text"
-        android:text="Last Name"
-        app:layout_constraintBottom_toTopOf="@+id/highestDegreeTutor"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.457"
-        app:layout_constraintStart_toStartOf="parent" />
+        <EditText
+            android:id="@+id/firstNameTutor"
+            android:layout_width="377dp"
+            android:layout_height="49dp"
+            android:ems="10"
+            android:inputType="text"
+            android:text="First Name" />
 
-    <EditText
-        android:id="@+id/emailTutor"
-        android:layout_width="346dp"
-        android:layout_height="51dp"
-        android:layout_marginBottom="12dp"
-        android:ems="10"
-        android:inputType="text"
-        android:text="Email address (username)"
-        app:layout_constraintBottom_toTopOf="@+id/passwordTutor"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.492"
-        app:layout_constraintStart_toStartOf="parent" />
+        <EditText
+            android:id="@+id/lastNameTutor"
+            android:layout_width="376dp"
+            android:layout_height="50dp"
+            android:layout_marginBottom="52dp"
+            android:ems="10"
+            android:inputType="text"
+            android:text="Last Name" />
 
-    <EditText
-        android:id="@+id/highestDegreeTutor"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="12dp"
-        android:ems="10"
-        android:inputType="text"
-        android:text="Highest degree"
-        app:layout_constraintBottom_toTopOf="@+id/coursesOfferedTutor"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
-        app:layout_constraintStart_toStartOf="parent" />
+        <EditText
+            android:id="@+id/highestDegreeTutor"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="12dp"
+            android:ems="10"
+            android:inputType="text"
+            android:text="Highest degree" />
 
-    <EditText
-        android:id="@+id/coursesOfferedTutor"
-        android:layout_width="328dp"
-        android:layout_height="48dp"
-        android:layout_marginBottom="12dp"
-        android:ems="10"
-        android:inputType="text"
-        android:text="Courses Offered (one or more)"
-        app:layout_constraintBottom_toTopOf="@+id/phoneNumberTutor"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.493"
-        app:layout_constraintStart_toStartOf="parent" />
+        <EditText
+            android:id="@+id/coursesOfferedTutor"
+            android:layout_width="328dp"
+            android:layout_height="48dp"
+            android:layout_marginBottom="92dp"
+            android:ems="10"
+            android:inputType="text"
+            android:text="Courses Offered (one or more)" />
 
-    <EditText
-        android:id="@+id/confirmPasswordTutor"
-        android:layout_width="242dp"
-        android:layout_height="43dp"
-        android:ems="10"
-        android:inputType="text"
-        android:text="Confirm Password"
-        tools:layout_editor_absoluteX="84dp"
-        tools:layout_editor_absoluteY="579dp" />
+        <EditText
+            android:id="@+id/phoneNumberTutor"
+            android:layout_width="261dp"
+            android:layout_height="52dp"
+            android:ems="10"
+            android:hint="Phone Number"
+            android:inputType="phone" />
+
+        <EditText
+            android:id="@+id/emailTutor"
+            android:layout_width="346dp"
+            android:layout_height="51dp"
+            android:layout_marginBottom="40dp"
+            android:ems="10"
+            android:inputType="text"
+            android:text="Email address (username)" />
+
+        <EditText
+            android:id="@+id/passwordTutor"
+            android:layout_width="254dp"
+            android:layout_height="46dp"
+            android:layout_marginBottom="8dp"
+            android:ems="10"
+            android:hint="Password"
+            android:inputType="textPassword" />
+
+        <EditText
+            android:id="@+id/confirmPasswordTutor"
+            android:layout_width="242dp"
+            android:layout_height="43dp"
+            android:ems="10"
+            android:inputType="text"
+            android:text="Confirm Password" />
+
+        <Button
+            android:id="@+id/submitTutorButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Submit" />
+    </LinearLayout>
+
 </androidx.constraintlayout.widget.ConstraintLayout>
