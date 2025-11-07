@@ -27,24 +27,24 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:ems="10"
-            android:inputType="text"
-            android:text="First Name" />
+            android:hint="First Name"
+            android:inputType="text" />
 
         <EditText
             android:id="@+id/lastNameStudent"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:ems="10"
-            android:inputType="text"
-            android:text="Last Name" />
+            android:hint="Last Name"
+            android:inputType="text" />
 
         <EditText
             android:id="@+id/phoneNumberStudent"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:ems="10"
-            android:inputType="text"
-            android:text="Phone Number" />
+            android:hint="Phone Number"
+            android:inputType="text" />
 
         <EditText
             android:id="@+id/programOfStudyStudent"
@@ -52,8 +52,8 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="36dp"
             android:ems="10"
-            android:inputType="text"
-            android:text="Program of Study" />
+            android:hint="Program of Study"
+            android:inputType="text" />
 
         <EditText
             android:id="@+id/emailStudent"
@@ -61,24 +61,24 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="12dp"
             android:ems="10"
-            android:inputType="text"
-            android:text="Email (username)" />
+            android:hint="Email (username)"
+            android:inputType="text" />
 
         <EditText
             android:id="@+id/passwordStudent"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:ems="10"
-            android:inputType="text"
-            android:text="Password" />
+            android:hint="Password"
+            android:inputType="text" />
 
         <EditText
             android:id="@+id/confirmPasswordStudent"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:ems="10"
-            android:inputType="text"
-            android:text=" Confirm Password" />
+            android:hint=" Confirm Password"
+            android:inputType="text" />
 
         <Button
             android:id="@+id/submitStudentButton"
