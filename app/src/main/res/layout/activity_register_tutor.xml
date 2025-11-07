@@ -89,7 +89,7 @@
             android:layout_height="43dp"
             android:ems="10"
             android:hint="Confirm Password"
-            android:inputType="text" />
+            android:inputType="textPassword" />
 
         <Button
             android:id="@+id/submitTutorButton"
