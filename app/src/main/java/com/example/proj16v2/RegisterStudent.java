@@ -169,7 +169,7 @@ public class RegisterStudent extends AppCompatActivity {
         if (userId!= -1) {
             Toast.makeText(RegisterStudent.this, "Registration Successful", Toast.LENGTH_LONG).show();
             Intent intent = new Intent(RegisterStudent.this, MainActivity.class);
-            intent.putExtra("UserType", "Attendee");
+            intent.putExtra("UserType", "Student");
             intent.putExtra("Email", emailAddressString);
             intent.putExtra("passWord", passwordString);
             intent.putExtra("registrationStatus", registrationStatus);
