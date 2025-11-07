@@ -32,8 +32,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 + "email TEXT NOT NULL UNIQUE, "
                 + "password TEXT NOT NULL, "
                 + "phone_number TEXT NOT NULL, "
-                + "registration_status TEXT, "
                 + "programOfStudy TEXT, "
+                + "registration_status TEXT, "
+                + "coursesOffered TEXT, "
                 + "highestDegree TEXT, "
                 + "user_role TEXT CHECK(user_role IN ('Student', 'Tutor', 'Administrator')) NOT NULL"
                 + ");";
