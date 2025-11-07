@@ -38,12 +38,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 + "user_role TEXT CHECK(user_role IN ('Student', 'Tutor', 'Administrator')) NOT NULL"
                 + ");";
 
-
         db.execSQL(createUsersTable);
 
         String createTutorCoursesTable = "CREATE TABLE TutorCourses ("
                 + "tutor_id INTEGER NOT NULL,"
-                + "course_code TEXT NOT NULL,"
+                + "coursesOffered TEXT NOT NULL,"
                 + "PRIMARY KEY (tutor_id, course_code),"
                 + "FOREIGN KEY (tutor_id) REFERENCES users(id) ON DELETE CASCADE"
                 + ");";

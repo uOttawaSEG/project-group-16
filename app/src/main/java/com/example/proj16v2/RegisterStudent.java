@@ -161,7 +161,7 @@ public class RegisterStudent extends AppCompatActivity {
                 "pending",
                 null,
                 null,
-                "Attendee"
+                "Student"
         );
 
 
