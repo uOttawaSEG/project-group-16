@@ -27,8 +27,8 @@
             android:layout_width="377dp"
             android:layout_height="49dp"
             android:ems="10"
-            android:inputType="text"
-            android:text="First Name" />
+            android:hint="First Name"
+            android:inputType="text" />
 
         <EditText
             android:id="@+id/lastNameTutor"
@@ -36,8 +36,8 @@
             android:layout_height="50dp"
             android:layout_marginBottom="52dp"
             android:ems="10"
-            android:inputType="text"
-            android:text="Last Name" />
+            android:hint="Last Name"
+            android:inputType="text" />
 
         <EditText
             android:id="@+id/highestDegreeTutor"
@@ -45,8 +45,8 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="12dp"
             android:ems="10"
-            android:inputType="text"
-            android:text="Highest degree" />
+            android:hint="Highest degree"
+            android:inputType="text" />
 
         <EditText
             android:id="@+id/coursesOfferedTutor"
@@ -54,8 +54,8 @@
             android:layout_height="48dp"
             android:layout_marginBottom="92dp"
             android:ems="10"
-            android:inputType="text"
-            android:text="Courses Offered (one or more)" />
+            android:hint="Courses Offered (one or more)"
+            android:inputType="text" />
 
         <EditText
             android:id="@+id/phoneNumberTutor"
@@ -71,8 +71,8 @@
             android:layout_height="51dp"
             android:layout_marginBottom="40dp"
             android:ems="10"
-            android:inputType="text"
-            android:text="Email address (username)" />
+            android:hint="Email address (username)"
+            android:inputType="text" />
 
         <EditText
             android:id="@+id/passwordTutor"
@@ -88,8 +88,8 @@
             android:layout_width="242dp"
             android:layout_height="43dp"
             android:ems="10"
-            android:inputType="text"
-            android:text="Confirm Password" />
+            android:hint="Confirm Password"
+            android:inputType="text" />
 
         <Button
             android:id="@+id/submitTutorButton"
