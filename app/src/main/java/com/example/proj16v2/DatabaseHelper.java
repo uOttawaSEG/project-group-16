@@ -153,7 +153,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
 
     public long addUser(String firstName, String lastName, String email, String password,
-                        String phone, String programOfStudy, String registrationStatus, String highestDegree, String coursesOffered, String userRole) {
+                        String phoneNumber, String programOfStudy, String registrationStatus, String highestDegree, String coursesOffered, String userRole) {
 
         SQLiteDatabase db = this.getWritableDatabase();
 
@@ -162,7 +162,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         values.put("last_name", lastName);
         values.put("email", email);
         values.put("password", password);
-        values.put("phone_number", phone);
+        values.put("phone_number", phoneNumber);
         values.put("program_of_study_string", programOfStudy);
         values.put("registration_status", "pending");
         values.put("Highest Degree", highestDegree);

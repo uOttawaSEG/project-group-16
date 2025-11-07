@@ -140,9 +140,10 @@ public class RegisterTutor extends AppCompatActivity {
                 emailTutorString,
                 passwordTutorString,
                 phoneNumberTutorString,
+                null,
                 registrationStatus,
-                coursesOfferedTutorString,
                 highestDegreeTutorString,
+                coursesOfferedTutorString,
                 "Tutor"
         );
 

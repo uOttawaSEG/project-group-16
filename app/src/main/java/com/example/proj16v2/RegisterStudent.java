@@ -160,6 +160,7 @@ public class RegisterStudent extends AppCompatActivity {
                 programOfStudyString,
                 "pending",
                 null,
+                null,
                 "Attendee"
         );
 
