@@ -57,12 +57,12 @@ public class RegisterStudent extends AppCompatActivity {
 
         submitStudentButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
-                registerAttendee();
+                registerStudent();
             }
         });
     }
 
-    public void registerAttendee(){
+    public void registerStudent(){
         //Receive input values
         String firstNameString = firstName.getText().toString().trim();
         String lastNameString = lastName.getText().toString().trim();
