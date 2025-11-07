@@ -50,12 +50,12 @@ public class RegisterTutor extends AppCompatActivity {
         submitTutorButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
 
-                registerOrganizer();
+                registerTutor();
             }
         });
     }
 
-    public void registerOrganizer(){
+    public void registerTutor(){
 
         //Receive input values
 
@@ -129,7 +129,7 @@ public class RegisterTutor extends AppCompatActivity {
         }
 
         if (TextUtils.isEmpty(coursesOfferedTutorString)) {
-            coursesOfferedTutor.setError("Organization Name is required");
+            coursesOfferedTutor.setError("Please enter at least one course");
             return;
         }
 
@@ -150,7 +150,7 @@ public class RegisterTutor extends AppCompatActivity {
         if (userId != -1) {
             Toast.makeText(RegisterTutor.this, "Registration Successful", Toast.LENGTH_LONG).show();
             Intent intent = new Intent(RegisterTutor.this, MainActivity.class);
-            intent.putExtra("UserType", "Organizer");
+            intent.putExtra("UserType", "Tutor");
             intent.putExtra("Email", emailTutorString);
             intent.putExtra("passWord", passwordTutorString);
             intent.putExtra("userId", userId);
