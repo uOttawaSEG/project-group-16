@@ -40,30 +40,21 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         db.execSQL(createUsersTable);
 
-
-        String createAppointmentsTable = "CREATE TABLE Appointments ("
-                + "appointment_id INTEGER PRIMARY KEY AUTOINCREMENT,"
-                + "title TEXT NOT NULL, "
-                + "description TEXT NOT NULL, "
-                + "date TEXT NOT NULL ,"
-                + "start_time TEXT NOT NULL ,"
-                + "end_time TEXT NOT NULL, "
-                + "appointment_location TEXT NOT NULL ,"
-                + "organizer_id INTEGER NOT NULL, "
-                + "isManualApproval INTEGER DEFAULT 0, "
-                + "FOREIGN KEY (organizer_id) REFERENCES Users(user_id) "
+        String createTutorCoursesTable = "CREATE TABLE TutorCourses ("
+                + "tutor_id INTEGER NOT NULL,"
+                + "course_code TEXT NOT NULL,"
+                + "PRIMARY KEY (tutor_id, course_code),"
+                + "FOREIGN KEY (tutor_id) REFERENCES users(id) ON DELETE CASCADE"
                 + ");";
 
-
-        db.execSQL(createAppointmentsTable);
-
+        db.execSQL(createTutorCoursesTable);
 
         String createEventStudentsTable = "CREATE TABLE EventStudents ("
                 + "id INTEGER PRIMARY KEY AUTOINCREMENT, "
                 + "event_id INTEGER NOT NULL, "
                 + "student_id INTEGER NOT NULL, "
                 + "registration_status TEXT DEFAULT 'pending', "
-                + "FOREIGN KEY (event_id) REFERENCES Events(event_id), "
+                + "FOREIGN KEY (appointment_id) REFERENCES Events(event_id), "
                 + "FOREIGN KEY (student_id) REFERENCES Users(user_id)"
                 + ");";
         db.execSQL(createEventStudentsTable);
@@ -162,7 +153,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
 
     public long addUser(String firstName, String lastName, String email, String password,
-                        String phone, String programOfStudy, String registrationStatus, String organizationName, String userRole) {
+                        String phone, String programOfStudy, String registrationStatus, String highestDegree, String coursesOffered, String userRole) {
 
         SQLiteDatabase db = this.getWritableDatabase();
 
@@ -174,7 +165,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         values.put("phone_number", phone);
         values.put("program_of_study_string", programOfStudy);
         values.put("registration_status", "pending");
-        values.put("organization_name", organizationName);
+        values.put("Highest Degree", highestDegree);
+        values.put("Courses Offered", coursesOffered);
         values.put("user_role", userRole);
 
         long userId = db.insert("Users", null, values);
