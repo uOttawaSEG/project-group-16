@@ -10,6 +10,7 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 import android.widget.Button;
+import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -32,6 +33,7 @@ public class MainActivity extends AppCompatActivity {
         registerButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
                 Intent intent = new Intent(MainActivity.this, Register.class);
+                Toast.makeText(MainActivity.this, "Register", Toast.LENGTH_SHORT).show();
                 startActivity(intent);
             }
         });
@@ -41,6 +43,7 @@ public class MainActivity extends AppCompatActivity {
         logInButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
                 Intent intent = new Intent(MainActivity.this, LogIn.class);
+                Toast.makeText(MainActivity.this, "Login", Toast.LENGTH_SHORT).show();
                 startActivity(intent);
             }
         });
