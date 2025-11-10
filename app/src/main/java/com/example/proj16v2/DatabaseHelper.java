@@ -8,6 +8,8 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
+import androidx.annotation.Nullable;
+
 public class DatabaseHelper extends SQLiteOpenHelper {
 
     private static final String DATABASE_NAME = "OTAMS.db";
@@ -270,4 +272,28 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         }
         return -1;
     }
+
+    public Cursor getUsers(String status, @Nullable String role) {
+        String where = role == null
+                ? "registration_status=?"
+                : "registration_status=? AND user_role=?";
+        String[] args = role == null ? new String[]{status} : new String[]{status, role};
+
+        return getReadableDatabase().query(
+                "Users",
+                new String[]{"user_id","first_name","last_name","email","user_role","registration_status"},
+                where, args, null, null, "last_name ASC");
+    }
+
+    public int setUserStatus(long userId, String newStatus) {
+        ContentValues v = new ContentValues();
+        v.put("registration_status", newStatus);
+        return getWritableDatabase().update(
+                "Users",
+                v,
+                "user_id=?",
+                new String[]{String.valueOf(userId)}
+        );
+    }
+
 }
