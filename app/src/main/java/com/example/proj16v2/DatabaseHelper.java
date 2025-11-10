@@ -41,12 +41,13 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         db.execSQL(createUsersTable);
 
-        String createTutorCoursesTable = "CREATE TABLE TutorCourses ("
-                + "tutor_id INTEGER NOT NULL,"
-                + "coursesOffered TEXT NOT NULL,"
-                + "PRIMARY KEY (tutor_id, course_code),"
-                + "FOREIGN KEY (tutor_id) REFERENCES users(id) ON DELETE CASCADE"
-                + ");";
+        String createTutorCoursesTable =
+                "CREATE TABLE TutorCourses (" +
+                        "tutor_id INTEGER NOT NULL, " +
+                        "course_name TEXT NOT NULL, " +
+                        "PRIMARY KEY (tutor_id, course_name), " +
+                        "FOREIGN KEY (tutor_id) REFERENCES Users(user_id) ON DELETE CASCADE" +
+                        ");";
 
         db.execSQL(createTutorCoursesTable);
 
@@ -55,7 +56,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 + "event_id INTEGER NOT NULL, "
                 + "student_id INTEGER NOT NULL, "
                 + "registration_status TEXT DEFAULT 'pending', "
-                + "FOREIGN KEY (appointment_id) REFERENCES Events(event_id), "
+                + "FOREIGN KEY (event_id) REFERENCES Events(event_id), "
                 + "FOREIGN KEY (student_id) REFERENCES Users(user_id)"
                 + ");";
         db.execSQL(createEventStudentsTable);
@@ -164,10 +165,10 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         values.put("email", email);
         values.put("password", password);
         values.put("phone_number", phoneNumber);
-        values.put("program_of_study_string", programOfStudy);
+        values.put("programOfStudy", programOfStudy);
         values.put("registration_status", "pending");
-        values.put("Highest Degree", highestDegree);
-        values.put("Courses Offered", coursesOffered);
+        values.put("highestDegree", highestDegree);
+        values.put("coursesOffered", coursesOffered);
         values.put("user_role", userRole);
 
         long userId = db.insert("Users", null, values);
@@ -211,6 +212,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         );
 
         boolean exists = cursor.getCount() > 0;
+        cursor.close();
         return exists;
     }
     public boolean phoneExists(String phoneNumber) {

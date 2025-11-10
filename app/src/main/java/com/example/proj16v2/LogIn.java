@@ -89,7 +89,7 @@ public class LogIn extends AppCompatActivity {
                         finish();
                     } else {
                         userRole = dbHelper.checkUser(emailAddressString, passwordString);
-                        if (userRole !=null) {
+                        if (userRole != null) {
 
                             registrationStatus=dbHelper.getRegistrationStatus(emailAddressString);
                             // User credentials are valid, proceed to welcome page
