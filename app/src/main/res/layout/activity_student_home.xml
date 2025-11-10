@@ -9,6 +9,6 @@
         android:layout_width="match_parent" android:layout_height="wrap_content"/>
     <Button android:id="@+id/btnMyRequests" android:text="My Requests / Sessions"
         android:layout_width="match_parent" android:layout_height="wrap_content"/>
-    <Button android:id="@+id/btnPastSessions" android:text="Past Sessions & Rate Tutor"
+    <Button android:id="@+id/btnPastSessions" android:text="Past Sessions &amp; Rate Tutor"
         android:layout_width="match_parent" android:layout_height="wrap_content"/>
 </LinearLayout>

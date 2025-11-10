@@ -103,7 +103,7 @@ public class LogIn extends AppCompatActivity {
                             if (registrationStatus.equals("pending")) {
                                 Toast.makeText(LogIn.this, "Your registration request has not been processed yet, approval is pending.", Toast.LENGTH_LONG).show();
                             } else if (registrationStatus.equals("rejected")) {
-                                Toast.makeText(LogIn.this, "Your registration request has been rejected. Please contact the administrator: (123)456-7890", Toast.LENGTH_LONG).show();
+                                Toast.makeText(LogIn.this, "Your registration request has been rejected. Please contact: (123)456-7890", Toast.LENGTH_LONG).show();
                             } else if (registrationStatus.equals("approved")){
 
                                 int userId = dbHelper.getUserId(emailAddressString);
