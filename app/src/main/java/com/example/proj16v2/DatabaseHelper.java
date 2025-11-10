@@ -346,6 +346,4 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return getWritableDatabase().delete("AvailabilitySlots", "slot_id=?", new String[]{ String.valueOf(slotId) });
     }
 
-
-
 }
