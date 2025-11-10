@@ -20,7 +20,6 @@ public class RegisterStudent extends AppCompatActivity {
     private DatabaseHelper dbHelper;
 
     //private ArrayList<String> userData;
-
     private Button submitStudentButton;
     private EditText firstName;
     private EditText lastName;
@@ -53,7 +52,7 @@ public class RegisterStudent extends AppCompatActivity {
         confirmPassword = findViewById(R.id.confirmPasswordStudent);
         programOfStudy = findViewById(R.id.programOfStudyStudent);
 
-        dbHelper=new DatabaseHelper(this);
+        dbHelper = new DatabaseHelper(this);
 
         submitStudentButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
@@ -134,10 +133,12 @@ public class RegisterStudent extends AppCompatActivity {
 
         if (dbHelper.emailExists(emailAddressString)){
             Toast.makeText(this, "This email already exists ! Please choose a different email.", Toast.LENGTH_SHORT).show();
+            return;
         }
 
         if (dbHelper.phoneExists(phoneNumberString)){
             Toast.makeText(this, "This phone number already exists ! Please choose a different phone number.", Toast.LENGTH_SHORT).show();
+            return;
         }
 
         // If all validations pass, proceed to register
