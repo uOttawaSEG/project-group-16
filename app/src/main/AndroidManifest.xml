@@ -12,7 +12,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Proj16v2">
         <activity
-            android:name=".Admin_list"
+            android:name=".AdminRequestsList"
             android:exported="false" />
         <activity
             android:name=".WelcomePage"
