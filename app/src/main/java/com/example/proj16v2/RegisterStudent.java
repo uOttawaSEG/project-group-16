@@ -178,7 +178,6 @@ public class RegisterStudent extends AppCompatActivity {
         } else {
             // Show error message if there was an issue with registration
 
-
             Toast.makeText(RegisterStudent.this, "Registration Failed. Try Again.", Toast.LENGTH_LONG).show();
         }
 

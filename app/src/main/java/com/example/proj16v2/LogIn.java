@@ -39,6 +39,13 @@ public class LogIn extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+        
+        try{
+            dbHelper = new DatabaseHelper(this);
+        } catch(Exception e){
+            Toast.makeText(this, "Database error:" + e.getMessage(), Toast.LENGTH_LONG).show();
+            return;
+        }
 
         // Initialize fields
         emailAddress = findViewById(R.id.emailAddressField);
@@ -80,7 +87,7 @@ public class LogIn extends AppCompatActivity {
                 // Loop until the user logs in
                 if (!loggedIn) {
                     //Check admin credentials
-                    if (emailAddressString.equals(adminEmail) && passwordString.equals(adminpassword)) {
+                    if (emailAddressString.equalsIgnoreCase(adminEmail) && passwordString.equals(adminpassword)) {
                         Intent intent = new Intent(LogIn.this, WelcomePage.class);
                         intent.putExtra("UserType", "Administrator");
                         intent.putExtra("registration_status", "approved");
