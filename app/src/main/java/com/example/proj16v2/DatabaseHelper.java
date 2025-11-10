@@ -137,6 +137,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             db.execSQL(createEventStudentsTable);
         }
 
+
         if (oldVersion < 6) {
             db.execSQL("ALTER TABLE Events ADD COLUMN isManualApproval INTEGER");
         }
