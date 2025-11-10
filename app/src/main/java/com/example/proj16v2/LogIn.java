@@ -88,7 +88,7 @@ public class LogIn extends AppCompatActivity {
                 if (!loggedIn) {
                     //Check admin credentials
                     if (Administrator.isAdmin(emailAddressString, passwordString)) {
-                        Intent intent = new Intent(LogIn.this, WelcomePage.class);
+                        Intent intent = new Intent(LogIn.this, AdminRequestsList.class);
                         intent.putExtra("UserType", "Administrator");
                         intent.putExtra("registration_status", "approved");
                         loggedIn = true;
