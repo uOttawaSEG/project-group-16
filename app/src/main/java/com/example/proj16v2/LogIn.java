@@ -113,7 +113,12 @@ public class LogIn extends AppCompatActivity {
                                     return;
                                 }
 
-                                Intent intent = new Intent(LogIn.this, WelcomePage.class);
+                                Intent intent;
+                                if ("Administrator".equalsIgnoreCase(userRole)) {
+                                    intent = new Intent(LogIn.this, AdminRequestsList.class);
+                                } else {
+                                    intent = new Intent(LogIn.this, WelcomePage.class);
+                                }
                                 intent.putExtra("registration_status", "approved");
                                 intent.putExtra("UserType", userRole); // Set appropriate user type based on your login
                                 intent.putExtra("user_id", userId);
