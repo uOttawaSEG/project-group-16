@@ -55,16 +55,22 @@
         <com.google.android.material.chip.Chip
             android:id="@+id/chipAll"
             style="@style/Widget.Material3.Chip.Filter"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:text="All" />
 
         <com.google.android.material.chip.Chip
             android:id="@+id/chipStudents"
             style="@style/Widget.Material3.Chip.Filter"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:text="Students" />
 
         <com.google.android.material.chip.Chip
             android:id="@+id/chipTutors"
             style="@style/Widget.Material3.Chip.Filter"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:text="Tutors" />
     </com.google.android.material.chip.ChipGroup>
 
