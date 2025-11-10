@@ -97,7 +97,17 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 + ");";
         db.execSQL(createRegistrationsTable);
 
-
+        db.execSQL(
+                "CREATE TABLE IF NOT EXISTS AvailabilitySlots (" +
+                        "slot_id INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                        "tutor_id INTEGER NOT NULL, " +
+                        "date TEXT NOT NULL, " +            // ISO yyyy-MM-dd
+                        "start_time TEXT NOT NULL, " +      // HH:mm
+                        "end_time TEXT NOT NULL, " +        // HH:mm
+                        "is_manual_approval INTEGER NOT NULL DEFAULT 1, " +
+                        "FOREIGN KEY (tutor_id) REFERENCES Users(user_id) ON DELETE CASCADE" +
+                        ");"
+        );
     }
 
 
@@ -153,6 +163,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                     ");";
             db.execSQL(createRegistrationsTable);
         }
+        db.execSQL("DROP TABLE IF EXISTS AvailabilitySlots;");
 
     }
 
@@ -295,5 +306,46 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 new String[]{String.valueOf(userId)}
         );
     }
+
+    public boolean slotOverlaps(int tutorId, String date, String start, String end) {
+        // Overlap logic: NOT( newStart >= existingEnd OR newEnd <= existingStart )
+        String sql =
+                "SELECT 1 FROM AvailabilitySlots " +
+                        "WHERE tutor_id=? AND date=? " +
+                        "AND NOT( ? >= end_time OR ? <= start_time ) " +
+                        "LIMIT 1";
+
+        Cursor c = getReadableDatabase().rawQuery(sql,
+                new String[]{ String.valueOf(tutorId), date, start, end });
+        boolean conflict = c.moveToFirst();
+        c.close();
+        return conflict;
+    }
+
+    public long addSlot(int tutorId, String date, String start, String end, boolean manual) {
+        ContentValues v = new ContentValues();
+        v.put("tutor_id", tutorId);
+        v.put("date", date);
+        v.put("start_time", start);
+        v.put("end_time", end);
+        v.put("is_manual_approval", manual ? 1 : 0);
+        return getWritableDatabase().insert("AvailabilitySlots", null, v);
+    }
+
+    public Cursor getSlotsForDate(int tutorId, String date) {
+        return getReadableDatabase().query(
+                "AvailabilitySlots",
+                new String[]{"slot_id","tutor_id","date","start_time","end_time","is_manual_approval"},
+                "tutor_id=? AND date=?",
+                new String[]{ String.valueOf(tutorId), date },
+                null, null, "start_time ASC"
+        );
+    }
+
+    public int deleteSlot(long slotId) {
+        return getWritableDatabase().delete("AvailabilitySlots", "slot_id=?", new String[]{ String.valueOf(slotId) });
+    }
+
+
 
 }
