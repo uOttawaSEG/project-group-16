@@ -1,0 +1,14 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:padding="16dp"
+    android:layout_width="match_parent" android:layout_height="match_parent">
+
+    <TextView android:text="Student Home" android:textStyle="bold"
+        android:textSize="20sp" android:layout_width="wrap_content" android:layout_height="wrap_content"/>
+
+    <Button android:id="@+id/btnSearchByCourse" android:text="Search by Course"
+        android:layout_width="match_parent" android:layout_height="wrap_content"/>
+    <Button android:id="@+id/btnMyRequests" android:text="My Requests / Sessions"
+        android:layout_width="match_parent" android:layout_height="wrap_content"/>
+    <Button android:id="@+id/btnPastSessions" android:text="Past Sessions & Rate Tutor"
+        android:layout_width="match_parent" android:layout_height="wrap_content"/>
+</LinearLayout>

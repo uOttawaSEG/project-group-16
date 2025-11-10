@@ -17,7 +17,7 @@ public class AdminRequestsList extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_admin_requests_list); // updated layout name ✅
+        setContentView(R.layout.activity_admin_requests_list);
 
         DatabaseHelper dbHelper = new DatabaseHelper(this);
 
