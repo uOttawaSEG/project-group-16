@@ -13,18 +13,22 @@ import androidx.annotation.Nullable;
 public class DatabaseHelper extends SQLiteOpenHelper {
 
     private static final String DATABASE_NAME = "OTAMS.db";
-    private static final int DATABASE_VERSION = 2;
-    private static final String TABLE_APPOINTMENTS = "appointments";
-    private static final String COLUMN_DATE = "date";
-    private static final String COLUMN_TUTOR_EMAIL = "tutor_email";
+    private static final int DATABASE_VERSION = 3;
+
     public DatabaseHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
 
     @Override
-    public void onCreate(SQLiteDatabase db) {
+    public void onConfigure(SQLiteDatabase db) {
+        super.onConfigure(db);
+        db.setForeignKeyConstraintsEnabled(true);
+    }
 
-        String createUsersTable = "CREATE TABLE Users ("
+    @Override
+    public void onCreate(SQLiteDatabase db) {
+        // ---------------- USERS ----------------
+        String createUsersTable = "CREATE TABLE IF NOT EXISTS Users ("
                 + "user_id INTEGER PRIMARY KEY AUTOINCREMENT, "
                 + "first_name TEXT NOT NULL, "
                 + "last_name TEXT NOT NULL, "
@@ -37,136 +41,139 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 + "highestDegree TEXT, "
                 + "user_role TEXT CHECK(user_role IN ('Student', 'Tutor', 'Administrator')) NOT NULL"
                 + ");";
-
         db.execSQL(createUsersTable);
 
+        // ------------- TUTOR COURSES -------------
         String createTutorCoursesTable =
-                "CREATE TABLE TutorCourses (" +
-                        "tutor_id INTEGER NOT NULL, " +
-                        "course_name TEXT NOT NULL, " +
-                        "PRIMARY KEY (tutor_id, course_name), " +
-                        "FOREIGN KEY (tutor_id) REFERENCES Users(user_id) ON DELETE CASCADE" +
-                        ");";
-
+                "CREATE TABLE IF NOT EXISTS TutorCourses ("
+                        + "tutor_id INTEGER NOT NULL, "
+                        + "course_name TEXT NOT NULL, "
+                        + "PRIMARY KEY (tutor_id, course_name), "
+                        + "FOREIGN KEY (tutor_id) REFERENCES Users(user_id) ON DELETE CASCADE"
+                        + ");";
         db.execSQL(createTutorCoursesTable);
 
-        String createEventStudentsTable = "CREATE TABLE EventStudents ("
-                + "id INTEGER PRIMARY KEY AUTOINCREMENT, "
-                + "event_id INTEGER NOT NULL, "
-                + "student_id INTEGER NOT NULL, "
-                + "registration_status TEXT DEFAULT 'pending', "
-                + "FOREIGN KEY (event_id) REFERENCES Events(event_id), "
-                + "FOREIGN KEY (student_id) REFERENCES Users(user_id)"
+        // --------- AVAILABILITY SLOTS (30-min blocks) ---------
+        String createAvailabilitySlots = "CREATE TABLE IF NOT EXISTS AvailabilitySlots ("
+                + "slot_id INTEGER PRIMARY KEY AUTOINCREMENT, "
+                + "tutor_id INTEGER NOT NULL, "
+                + "date TEXT NOT NULL, "           // YYYY-MM-DD
+                + "start_time TEXT NOT NULL, "      // HH:MM
+                + "end_time TEXT NOT NULL, "        // HH:MM
+                + "is_manual_approval INTEGER NOT NULL DEFAULT 1, "
+                + "UNIQUE (tutor_id, date, start_time), "
+                + "FOREIGN KEY (tutor_id) REFERENCES Users(user_id) ON DELETE CASCADE"
                 + ");";
-        db.execSQL(createEventStudentsTable);
+        db.execSQL(createAvailabilitySlots);
 
-        Cursor cursor = db.rawQuery("SELECT * FROM EventStudents", null);
-        if (cursor != null && cursor.moveToFirst()) {
-            do {
-                Log.d("Database Debug",
-                        "Row - Student ID: " + cursor.getInt(cursor.getColumnIndexOrThrow("student_id")) +
-                                ", Event ID: " + cursor.getInt(cursor.getColumnIndexOrThrow("event_id")) +
-                                ", Status: " + cursor.getString(cursor.getColumnIndexOrThrow("registration_status")));
-            } while (cursor.moveToNext());
-            cursor.close();
-        } else {
-            Log.e("Database Debug", "No rows found in EventStudents table.");
-        }
-        Log.d("Schema Debug", "Starting PRAGMA table_info query...");
-        Cursor cursor1 = db.rawQuery("PRAGMA table_info(EventStudents);", null);
-        if (cursor1 != null && cursor1.moveToFirst()) {
-            do {
-                Log.d("Schema Debug", "Column: " + cursor1.getString(cursor1.getColumnIndexOrThrow("name")) +
-                        ", Type: " + cursor1.getString(cursor1.getColumnIndexOrThrow("type")));
-            } while (cursor1.moveToNext());
-            cursor1.close();
-        } else {
-            Log.e("Schema Debug", "No schema info found for EventStudents table.");
-        }
-        Log.d("Schema Debug", "Finished PRAGMA table_info query...");
-
-        String createRegistrationsTable = "CREATE TABLE Registrations ("
-                + "id INTEGER PRIMARY KEY AUTOINCREMENT, "
-                + "event_id INTEGER NOT NULL, "
+        // ------------------ SESSIONS ------------------
+        String createSessions = "CREATE TABLE IF NOT EXISTS Sessions ("
+                + "session_id INTEGER PRIMARY KEY AUTOINCREMENT, "
                 + "student_id INTEGER NOT NULL, "
-                + "FOREIGN KEY(event_id) REFERENCES Events(event_id), "
-                + "FOREIGN KEY(student_id) REFERENCES Users(user_id)"
+                + "tutor_id INTEGER NOT NULL, "
+                + "course_code TEXT NOT NULL, "
+                + "date TEXT NOT NULL, "            // YYYY-MM-DD
+                + "start_time TEXT NOT NULL, "      // HH:MM
+                + "end_time TEXT NOT NULL, "        // HH:MM
+                + "status TEXT NOT NULL, "          // requested, approved, rejected, cancelled, completed
+                + "created_at TEXT NOT NULL, "      // ISO timestamp string
+                + "cancelled_by TEXT, "
+                + "cancelled_at TEXT, "
+                + "UNIQUE (tutor_id, date, start_time), "
+                + "FOREIGN KEY (student_id) REFERENCES Users(user_id), "
+                + "FOREIGN KEY (tutor_id) REFERENCES Users(user_id)"
                 + ");";
-        db.execSQL(createRegistrationsTable);
+        db.execSQL(createSessions);
 
-        db.execSQL(
-                "CREATE TABLE IF NOT EXISTS AvailabilitySlots (" +
-                        "slot_id INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                        "tutor_id INTEGER NOT NULL, " +
-                        "date TEXT NOT NULL, " +            // ISO yyyy-MM-dd
-                        "start_time TEXT NOT NULL, " +      // HH:mm
-                        "end_time TEXT NOT NULL, " +        // HH:mm
-                        "is_manual_approval INTEGER NOT NULL DEFAULT 1, " +
-                        "FOREIGN KEY (tutor_id) REFERENCES Users(user_id) ON DELETE CASCADE" +
-                        ");"
-        );
+        // ------------------ RATINGS ------------------
+        String createRatings = "CREATE TABLE IF NOT EXISTS Ratings ("
+                + "rating_id INTEGER PRIMARY KEY AUTOINCREMENT, "
+                + "session_id INTEGER NOT NULL UNIQUE, "
+                + "student_id INTEGER NOT NULL, "
+                + "tutor_id INTEGER NOT NULL, "
+                + "stars INTEGER NOT NULL CHECK (stars BETWEEN 1 AND 5), "
+                + "comment TEXT, "
+                + "created_at TEXT NOT NULL, "
+                + "FOREIGN KEY (session_id) REFERENCES Sessions(session_id) ON DELETE CASCADE, "
+                + "FOREIGN KEY (student_id) REFERENCES Users(user_id), "
+                + "FOREIGN KEY (tutor_id) REFERENCES Users(user_id)"
+                + ");";
+        db.execSQL(createRatings);
+
+        // ------------------ INDEXES ------------------
+        db.execSQL("CREATE INDEX IF NOT EXISTS idx_slots_tutor_date ON AvailabilitySlots(tutor_id, date);");
+        db.execSQL("CREATE INDEX IF NOT EXISTS idx_sessions_tutor_date ON Sessions(tutor_id, date);");
+        db.execSQL("CREATE INDEX IF NOT EXISTS idx_sessions_student ON Sessions(student_id);");
+        db.execSQL("CREATE INDEX IF NOT EXISTS idx_ratings_tutor ON Ratings(tutor_id);");
     }
-
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+        // Guarded, idempotent upgrades. Keep try/catch so re-running is safe.
         if (oldVersion < 2) {
-            db.execSQL("ALTER TABLE Users ADD COLUMN registration_status TEXT");
+            try {
+                db.execSQL("ALTER TABLE Users ADD COLUMN registration_status TEXT");
+            } catch (Exception ignored) {
+            }
         }
-
         if (oldVersion < 3) {
-            String createEventsTable = "CREATE TABLE Events ("
-                    + "event_id INTEGER PRIMARY KEY AUTOINCREMENT,"
-                    + "title TEXT NOT NULL, "
-                    + "description TEXT NOT NULL, "
-                    + "date TEXT NOT NULL ,"
-                    + "start_time TEXT NOT NULL ,"
+            String createAvailabilitySlots = "CREATE TABLE IF NOT EXISTS AvailabilitySlots ("
+                    + "slot_id INTEGER PRIMARY KEY AUTOINCREMENT, "
+                    + "tutor_id INTEGER NOT NULL, "
+                    + "date TEXT NOT NULL, "
+                    + "start_time TEXT NOT NULL, "
                     + "end_time TEXT NOT NULL, "
-                    + "event_address TEXT NOT NULL ,"
-                    + "eventState TEXT NOT NULL, "
-                    + "organizer_id INTEGER NOT NULL, "
-                    + "isManualApproval INTEGER DEFAULT 0, "
-                    + "FOREIGN KEY (organizer_id) REFERENCES Users(user_id) "
+                    + "is_manual_approval INTEGER NOT NULL DEFAULT 1, "
+                    + "UNIQUE (tutor_id, date, start_time), "
+                    + "FOREIGN KEY (tutor_id) REFERENCES Users(user_id) ON DELETE CASCADE"
                     + ");";
-            db.execSQL(createEventsTable);
+            db.execSQL(createAvailabilitySlots);
+            db.execSQL("CREATE INDEX IF NOT EXISTS idx_slots_tutor_date ON AvailabilitySlots(tutor_id, date);");
         }
-
         if (oldVersion < 4) {
-            db.execSQL("ALTER TABLE Events ADD COLUMN eventState TEXT");
+            String createSessions = "CREATE TABLE IF NOT EXISTS Sessions ("
+                    + "session_id INTEGER PRIMARY KEY AUTOINCREMENT, "
+                    + "student_id INTEGER NOT NULL, "
+                    + "tutor_id INTEGER NOT NULL, "
+                    + "course_code TEXT NOT NULL, "
+                    + "date TEXT NOT NULL, "
+                    + "start_time TEXT NOT NULL, "
+                    + "end_time TEXT NOT NULL, "
+                    + "status TEXT NOT NULL, "
+                    + "created_at TEXT NOT NULL, "
+                    + "cancelled_by TEXT, "
+                    + "cancelled_at TEXT, "
+                    + "UNIQUE (tutor_id, date, start_time), "
+                    + "FOREIGN KEY (student_id) REFERENCES Users(user_id), "
+                    + "FOREIGN KEY (tutor_id) REFERENCES Users(user_id)"
+                    + ");";
+            db.execSQL(createSessions);
+            db.execSQL("CREATE INDEX IF NOT EXISTS idx_sessions_tutor_date ON Sessions(tutor_id, date);");
+            db.execSQL("CREATE INDEX IF NOT EXISTS idx_sessions_student ON Sessions(student_id);");
         }
         if (oldVersion < 5) {
-            String createEventStudentsTable = "CREATE TABLE EventStudents ("
-                    + "id INTEGER PRIMARY KEY AUTOINCREMENT, "
-                    + "event_id INTEGER NOT NULL, "
+            String createRatings = "CREATE TABLE IF NOT EXISTS Ratings ("
+                    + "rating_id INTEGER PRIMARY KEY AUTOINCREMENT, "
+                    + "session_id INTEGER NOT NULL UNIQUE, "
                     + "student_id INTEGER NOT NULL, "
-                    + "registration_status TEXT DEFAULT 'pending', "
-                    + "FOREIGN KEY (event_id) REFERENCES Events(event_id), "
-                    + "FOREIGN KEY (student_id) REFERENCES Users(user_id)"
+                    + "tutor_id INTEGER NOT NULL, "
+                    + "stars INTEGER NOT NULL CHECK (stars BETWEEN 1 AND 5), "
+                    + "comment TEXT, "
+                    + "created_at TEXT NOT NULL, "
+                    + "FOREIGN KEY (session_id) REFERENCES Sessions(session_id) ON DELETE CASCADE, "
+                    + "FOREIGN KEY (student_id) REFERENCES Users(user_id), "
+                    + "FOREIGN KEY (tutor_id) REFERENCES Users(user_id)"
                     + ");";
-            db.execSQL(createEventStudentsTable);
+            db.execSQL(createRatings);
+            db.execSQL("CREATE INDEX IF NOT EXISTS idx_ratings_tutor ON Ratings(tutor_id);");
         }
-
-
-        if (oldVersion < 6) {
-            db.execSQL("ALTER TABLE Events ADD COLUMN isManualApproval INTEGER");
-        }
-        if (oldVersion < 7) {
-            String createRegistrationsTable = "CREATE TABLE Registrations (" +
-                    "id INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                    "event_id INTEGER NOT NULL, " +
-                    "student_id INTEGER NOT NULL, " +
-                    "FOREIGN KEY(event_id) REFERENCES Events(event_id), " +
-                    "FOREIGN KEY(student_id) REFERENCES Users(user_id)" +
-                    ");";
-            db.execSQL(createRegistrationsTable);
-        }
-        db.execSQL("DROP TABLE IF EXISTS AvailabilitySlots;");
-
     }
 
+    /* ===================== USER API (matches your usage) ===================== */
 
     public long addUser(String firstName, String lastName, String email, String password,
-                        String phoneNumber, String programOfStudy, String registrationStatus, String highestDegree, String coursesOffered, String userRole) {
+                        String phoneNumber, String programOfStudy, String registrationStatus,
+                        String highestDegree, String coursesOffered, String userRole) {
 
         SQLiteDatabase db = this.getWritableDatabase();
 
@@ -177,120 +184,112 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         values.put("password", password);
         values.put("phone_number", phoneNumber);
         values.put("programOfStudy", programOfStudy);
-        values.put("registration_status", "pending");
+        values.put("registration_status", registrationStatus == null ? "pending" : registrationStatus);
         values.put("highestDegree", highestDegree);
         values.put("coursesOffered", coursesOffered);
         values.put("user_role", userRole);
 
         long userId = db.insert("Users", null, values);
 
-        // for logcat
-
         if (userId == -1) {
-            Log.e("Debug", "Failed to add user: " + email);
+            Log.e("DB", "Failed to add user: " + email);
         } else {
-            Log.d("Debug", "User added with ID: " + userId);
+            Log.d("DB", "User added with ID: " + userId);
         }
-
         return userId;
     }
 
     public String checkUser(String email, String password) {
         SQLiteDatabase db = this.getReadableDatabase();
-        Cursor cursor = db.query("Users", new String[]{"user_role"}, "email=? AND password=?", new String[]{email, password}, null, null, null);
-
-        if (cursor != null && cursor.moveToFirst()) {
-            @SuppressLint("Range") String userRole = cursor.getString(cursor.getColumnIndex("user_role"));
-
-            cursor.close();
-            return userRole;
-        }
-
-        if (cursor != null) {
-            cursor.close();
-        }
-
-        return null;
-    }
-    public boolean emailExists(String email) {
-        SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.query(
+                "Users",
+                new String[]{"user_role"},
+                "email=? AND password=?",
+                new String[]{email, password},
+                null, null, null);
+
+        String role = null;
+        if (cursor != null && cursor.moveToFirst()) {
+            @SuppressLint("Range")
+            String userRole = cursor.getString(cursor.getColumnIndex("user_role"));
+            role = userRole;
+        }
+        if (cursor != null) cursor.close();
+        return role;
+    }
+
+    public boolean emailExists(String email) {
+        Cursor cursor = getReadableDatabase().query(
                 "Users",
                 new String[]{"email"},
                 "email = ?",
                 new String[]{email},
                 null, null, null
         );
-
-        boolean exists = cursor.getCount() > 0;
-        cursor.close();
+        boolean exists = (cursor != null && cursor.getCount() > 0);
+        if (cursor != null) cursor.close();
         return exists;
     }
+
     public boolean phoneExists(String phoneNumber) {
-        SQLiteDatabase db = this.getReadableDatabase();
-        Cursor cursor = db.query(
+        Cursor cursor = getReadableDatabase().query(
                 "Users",
                 new String[]{"phone_number"},
                 "phone_number = ?",
                 new String[]{phoneNumber},
                 null, null, null
         );
-
-        boolean exists = cursor.getCount() > 0;
-        cursor.close();
+        boolean exists = (cursor != null && cursor.getCount() > 0);
+        if (cursor != null) cursor.close();
         return exists;
     }
+
     public String getRegistrationStatus(String email) {
-        SQLiteDatabase db = this.getReadableDatabase();
-        Cursor cursor = db.query("Users", new String[]{"registration_status"}, "email = ?", new String[]{email}, null, null, null);
+        Cursor cursor = getReadableDatabase().query(
+                "Users",
+                new String[]{"registration_status"},
+                "email = ?",
+                new String[]{email},
+                null, null, null
+        );
+        String status = null;
         if (cursor != null && cursor.moveToFirst()) {
-            @SuppressLint("Range") String status = cursor.getString(cursor.getColumnIndex("registration_status"));
-            cursor.close();
-            return status;
+            @SuppressLint("Range")
+            String s = cursor.getString(cursor.getColumnIndex("registration_status"));
+            status = s;
         }
-        return null;
+        if (cursor != null) cursor.close();
+        return status;
     }
 
     public int getUserId(String email) {
-        SQLiteDatabase db = this.getReadableDatabase();
-
-        Log.d("Debug", "Fetching User ID for email: " + email);
-
-        Cursor cursor = db.query(
+        Cursor cursor = getReadableDatabase().query(
                 "Users",
                 new String[]{"user_id"},
                 "email = ?",
                 new String[]{email},
-                null,
-                null,
-                null
+                null, null, null
         );
-
+        int userId = -1;
         if (cursor != null && cursor.moveToFirst()) {
-            int userId = cursor.getInt(cursor.getColumnIndexOrThrow("user_id"));
-            Log.d("Debug", "User ID found: " + userId); // Affiche l'ID trouvé
-            cursor.close();
-            return userId;
+            userId = cursor.getInt(cursor.getColumnIndexOrThrow("user_id"));
         }
-
-        Log.e("Debug", "No User ID found for email: " + email);
-
-        if (cursor != null) {
-            cursor.close();
-        }
-        return -1;
+        if (cursor != null) cursor.close();
+        return userId;
     }
 
     public Cursor getUsers(String status, @Nullable String role) {
-        String where = role == null
-                ? "registration_status=?"
-                : "registration_status=? AND user_role=?";
+        String where = role == null ? "registration_status=?" : "registration_status=? AND user_role=?";
         String[] args = role == null ? new String[]{status} : new String[]{status, role};
 
         return getReadableDatabase().query(
                 "Users",
-                new String[]{"user_id","first_name","last_name","email","user_role","registration_status"},
-                where, args, null, null, "last_name ASC");
+                new String[]{"user_id", "first_name", "last_name", "email", "user_role", "registration_status"},
+                where,
+                args,
+                null, null,
+                "last_name ASC"
+        );
     }
 
     public int setUserStatus(long userId, String newStatus) {
@@ -304,43 +303,160 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         );
     }
 
-    public boolean slotOverlaps(int tutorId, String date, String start, String end) {
-        // Overlap logic: NOT( newStart >= existingEnd OR newEnd <= existingStart )
-        String sql =
-                "SELECT 1 FROM AvailabilitySlots " +
-                        "WHERE tutor_id=? AND date=? " +
-                        "AND NOT( ? >= end_time OR ? <= start_time ) " +
-                        "LIMIT 1";
+    /* ===================== TUTOR AVAILABILITY API ===================== */
 
+    /**
+     * Detect overlap: NOT( newStart >= existingEnd OR newEnd <= existingStart )
+     */
+    public boolean slotOverlaps(long tutorId, String date, String start, String end) {
+        String sql =
+                "SELECT 1 FROM AvailabilitySlots "
+                        + "WHERE tutor_id=? AND date=? "
+                        + "AND NOT( ? >= end_time OR ? <= start_time ) "
+                        + "LIMIT 1";
         Cursor c = getReadableDatabase().rawQuery(sql,
-                new String[]{ String.valueOf(tutorId), date, start, end });
-        boolean conflict = c.moveToFirst();
-        c.close();
+                new String[]{String.valueOf(tutorId), date, start, end});
+        boolean conflict = (c != null && c.moveToFirst());
+        if (c != null) c.close();
         return conflict;
     }
 
-    public long addSlot(int tutorId, String date, String start, String end, boolean manual) {
+    public long addSlot(long tutorId, String date, String start, String end, boolean manualApproval) {
         ContentValues v = new ContentValues();
         v.put("tutor_id", tutorId);
         v.put("date", date);
         v.put("start_time", start);
         v.put("end_time", end);
-        v.put("is_manual_approval", manual ? 1 : 0);
+        v.put("is_manual_approval", manualApproval ? 1 : 0);
         return getWritableDatabase().insert("AvailabilitySlots", null, v);
     }
 
-    public Cursor getSlotsForDate(int tutorId, String date) {
+    public Cursor getSlotsForDate(long tutorId, String date) {
         return getReadableDatabase().query(
                 "AvailabilitySlots",
-                new String[]{"slot_id","tutor_id","date","start_time","end_time","is_manual_approval"},
+                new String[]{"slot_id", "tutor_id", "date", "start_time", "end_time", "is_manual_approval"},
                 "tutor_id=? AND date=?",
-                new String[]{ String.valueOf(tutorId), date },
-                null, null, "start_time ASC"
+                new String[]{String.valueOf(tutorId), date},
+                null, null,
+                "start_time ASC"
+        );
+    }
+
+    public Cursor getAllSlots(long tutorId) {
+        return getReadableDatabase().query(
+                "AvailabilitySlots",
+                new String[]{"slot_id", "tutor_id", "date", "start_time", "end_time", "is_manual_approval"},
+                "tutor_id=?",
+                new String[]{String.valueOf(tutorId)},
+                null, null,
+                "date ASC, start_time ASC"
         );
     }
 
     public int deleteSlot(long slotId) {
-        return getWritableDatabase().delete("AvailabilitySlots", "slot_id=?", new String[]{ String.valueOf(slotId) });
+        return getWritableDatabase().delete("AvailabilitySlots", "slot_id=?", new String[]{String.valueOf(slotId)});
     }
 
+    /* ===================== SESSIONS API ===================== */
+
+    public long createSession(long studentId, long tutorId, String courseCode,
+                              String date, String startTime, String endTime,
+                              String status, String createdAt) {
+        ContentValues v = new ContentValues();
+        v.put("student_id", studentId);
+        v.put("tutor_id", tutorId);
+        v.put("course_code", courseCode);
+        v.put("date", date);
+        v.put("start_time", startTime);
+        v.put("end_time", endTime);
+        v.put("status", status);        // e.g., "requested"
+        v.put("created_at", createdAt); // ISO string
+        return getWritableDatabase().insert("Sessions", null, v);
+    }
+
+    public int updateSessionStatus(long sessionId, String status,
+                                   @Nullable String cancelledBy, @Nullable String cancelledAt) {
+        ContentValues v = new ContentValues();
+        v.put("status", status);
+        if (cancelledBy != null) v.put("cancelled_by", cancelledBy);
+        if (cancelledAt != null) v.put("cancelled_at", cancelledAt);
+        return getWritableDatabase().update("Sessions", v, "session_id=?", new String[]{String.valueOf(sessionId)});
+    }
+
+    public Cursor getSessionsForStudent(long studentId) {
+        return getReadableDatabase().query(
+                "Sessions",
+                new String[]{"session_id", "student_id", "tutor_id", "course_code", "date", "start_time", "end_time", "status", "created_at", "cancelled_by", "cancelled_at"},
+                "student_id=?",
+                new String[]{String.valueOf(studentId)},
+                null, null,
+                "date DESC, start_time DESC"
+        );
+    }
+
+    public Cursor getSessionsForTutor(long tutorId) {
+        return getReadableDatabase().query(
+                "Sessions",
+                new String[]{"session_id", "student_id", "tutor_id", "course_code", "date", "start_time", "end_time", "status", "created_at", "cancelled_by", "cancelled_at"},
+                "tutor_id=?",
+                new String[]{String.valueOf(tutorId)},
+                null, null,
+                "date DESC, start_time DESC"
+        );
+    }
+
+    /* ===================== RATINGS API ===================== */
+
+    public long addOrUpdateRating(long sessionId, long studentId, long tutorId,
+                                  int stars, @Nullable String comment, String createdAt) {
+        // try update first (session_id is UNIQUE)
+        ContentValues v = new ContentValues();
+        v.put("session_id", sessionId);
+        v.put("student_id", studentId);
+        v.put("tutor_id", tutorId);
+        v.put("stars", stars);
+        v.put("comment", comment);
+        v.put("created_at", createdAt);
+
+        // replace (upsert) pattern using CONFLICT REPLACE requires table to be created with ON CONFLICT, so use manual approach:
+        // Try insert; if fails due to UNIQUE, do update.
+        long id = getWritableDatabase().insert("Ratings", null, v);
+        if (id == -1) {
+            // conflict: update
+            int rows = getWritableDatabase().update("Ratings", v, "session_id=?", new String[]{String.valueOf(sessionId)});
+            if (rows > 0) {
+                // fetch rating_id for return
+                Cursor c = getReadableDatabase().query("Ratings", new String[]{"rating_id"}, "session_id=?", new String[]{String.valueOf(sessionId)}, null, null, null);
+                long rid = -1;
+                if (c != null && c.moveToFirst()) rid = c.getLong(0);
+                if (c != null) c.close();
+                return rid;
+            }
+        }
+        return id;
+    }
+
+    public Cursor getRatingsForTutor(long tutorId) {
+        return getReadableDatabase().query(
+                "Ratings",
+                new String[]{"rating_id", "session_id", "student_id", "tutor_id", "stars", "comment", "created_at"},
+                "tutor_id=?",
+                new String[]{String.valueOf(tutorId)},
+                null, null,
+                "created_at DESC"
+        );
+    }
+
+    public float getAverageRatingForTutor(long tutorId) {
+        Cursor c = getReadableDatabase().rawQuery(
+                "SELECT AVG(stars) FROM Ratings WHERE tutor_id=?",
+                new String[]{String.valueOf(tutorId)}
+        );
+        float avg = 0f;
+        if (c != null && c.moveToFirst()) {
+            avg = c.isNull(0) ? 0f : (float) c.getDouble(0);
+        }
+        if (c != null) c.close();
+        return avg;
+    }
 }
