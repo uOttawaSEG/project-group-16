@@ -6,15 +6,17 @@
     android:layout_marginBottom="8dp"
     android:foreground="?attr/selectableItemBackground">
 
+
     <LinearLayout
         android:orientation="horizontal"
         android:padding="12dp"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:weightSum="2">
+
 
         <LinearLayout
             android:orientation="vertical"
-            android:layout_weightSum="1"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1">
@@ -33,11 +35,20 @@
                 android:text="09:00 - 09:30"/>
         </LinearLayout>
 
-        <Button
-            android:id="@+id/btnDeleteSlot"
-            android:layout_width="wrap_content"
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="Delete"/>
+            android:layout_weight="1"
+            android:gravity="end">
+
+            <Button
+                android:id="@+id/btnDeleteSlot"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Delete"/>
+        </LinearLayout>
     </LinearLayout>
 
 </androidx.cardview.widget.CardView>

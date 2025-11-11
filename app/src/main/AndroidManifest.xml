@@ -12,31 +12,16 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Proj16v2">
         <activity
-            android:name=".RowSessionPast"
-            android:exported="false" />
-        <activity
             android:name=".PastSessions"
-            android:exported="false" />
-        <activity
-            android:name=".RowSessionUpcoming"
             android:exported="false" />
         <activity
             android:name=".ActivityUpcomingSessions"
             android:exported="false" />
         <activity
-            android:name=".RowSessionRequest"
-            android:exported="false" />
-        <activity
             android:name=".ActivityPendingRequests"
             android:exported="false" />
         <activity
-            android:name=".RowAvailabilitySlot"
-            android:exported="false" />
-        <activity
             android:name=".ActivityManageAvailability"
-            android:exported="false" />
-        <activity
-            android:name=".activity_manage_availability"
             android:exported="false" />
         <activity
             android:name=".StudentHome"
@@ -49,9 +34,6 @@
             android:exported="false" />
         <activity
             android:name=".WelcomePage"
-            android:exported="false" />
-        <activity
-            android:name=".DatabaseHelper"
             android:exported="false" />
         <activity
             android:name=".LogIn"
