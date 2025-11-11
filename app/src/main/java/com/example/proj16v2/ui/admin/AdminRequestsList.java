@@ -1,4 +1,4 @@
-package com.example.proj16v2;
+package com.example.proj16v2.ui.admin;
 
 import android.database.Cursor;
 import android.os.Bundle;
@@ -9,6 +9,10 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.example.proj16v2.Data.DatabaseHelper;
+import com.example.proj16v2.R;
+
 import java.util.ArrayList;
 import java.util.List;
 

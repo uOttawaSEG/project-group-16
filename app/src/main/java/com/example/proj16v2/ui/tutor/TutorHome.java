@@ -1,10 +1,17 @@
-package com.example.proj16v2;
+package com.example.proj16v2.ui.tutor;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.example.proj16v2.R;
+import com.example.proj16v2.ui.tutor.availability.ActivityManageAvailability;
+import com.example.proj16v2.ui.tutor.availability.RowAvailibilitySlot;
+import com.example.proj16v2.ui.tutor.requests.ActivityPendingRequests;
+import com.example.proj16v2.ui.tutor.sessions.ActivityUpcomingSessions;
+import com.example.proj16v2.ui.tutor.sessions.PastSessions;
 
 public class TutorHome extends AppCompatActivity {
 

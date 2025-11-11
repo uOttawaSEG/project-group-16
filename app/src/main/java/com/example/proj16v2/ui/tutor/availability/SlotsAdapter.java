@@ -1,4 +1,4 @@
-package com.example.proj16v2;
+package com.example.proj16v2.ui.tutor.availability;
 
 
 import android.view.LayoutInflater;
@@ -9,6 +9,8 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.example.proj16v2.R;
 
 import java.util.ArrayList;
 import java.util.List;

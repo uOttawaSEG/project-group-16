@@ -1,7 +1,9 @@
-package com.example.proj16v2;
+package com.example.proj16v2.ui.student;
 
 import android.os.Bundle;
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.example.proj16v2.R;
 
 public class StudentHome extends AppCompatActivity {
     @Override protected void onCreate(Bundle b) {

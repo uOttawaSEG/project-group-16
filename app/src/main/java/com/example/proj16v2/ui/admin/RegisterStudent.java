@@ -1,4 +1,4 @@
-package com.example.proj16v2;
+package com.example.proj16v2.ui.admin;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -14,6 +14,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+
+import com.example.proj16v2.Data.DatabaseHelper;
+import com.example.proj16v2.R;
+import com.example.proj16v2.ui.MainActivity;
 
 public class RegisterStudent extends AppCompatActivity {
 

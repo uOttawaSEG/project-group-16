@@ -1,4 +1,4 @@
-package com.example.proj16v2;
+package com.example.proj16v2.ui;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -11,6 +11,8 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 import android.widget.Button;
 import android.widget.Toast;
+
+import com.example.proj16v2.R;
 
 public class MainActivity extends AppCompatActivity {
 

@@ -1,4 +1,4 @@
-package com.example.proj16v2;
+package com.example.proj16v2.Data;
 
 import android.annotation.SuppressLint;
 import android.content.ContentValues;

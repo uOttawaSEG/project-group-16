@@ -1,4 +1,4 @@
-package com.example.proj16v2;
+package com.example.proj16v2.ui.admin;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,6 +8,8 @@ import android.widget.Button;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.example.proj16v2.R;
 
 import java.util.ArrayList;
 import java.util.List;

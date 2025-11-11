@@ -1,4 +1,4 @@
-package com.example.proj16v2;
+package com.example.proj16v2.Model;
 
 public class User {
     private String email;

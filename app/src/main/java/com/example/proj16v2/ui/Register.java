@@ -1,4 +1,4 @@
-package com.example.proj16v2;
+package com.example.proj16v2.ui;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -10,6 +10,10 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 import android.widget.Button;
+
+import com.example.proj16v2.R;
+import com.example.proj16v2.ui.admin.RegisterStudent;
+import com.example.proj16v2.ui.admin.RegisterTutor;
 
 public class Register extends AppCompatActivity {
 

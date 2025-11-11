@@ -12,46 +12,46 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Proj16v2">
         <activity
-            android:name=".PastSessions"
+            android:name=".ui.tutor.sessions.PastSessions"
             android:exported="false" />
         <activity
-            android:name=".RowAvailibilitySlot"
+            android:name=".ui.tutor.availability.RowAvailibilitySlot"
             android:exported="false" />
         <activity
-            android:name=".ActivityUpcomingSessions"
+            android:name=".ui.tutor.sessions.ActivityUpcomingSessions"
             android:exported="false" />
         <activity
-            android:name=".ActivityPendingRequests"
+            android:name=".ui.tutor.requests.ActivityPendingRequests"
             android:exported="false" />
         <activity
-            android:name=".ActivityManageAvailability"
+            android:name=".ui.tutor.availability.ActivityManageAvailability"
             android:exported="false" />
         <activity
-            android:name=".StudentHome"
+            android:name=".ui.student.StudentHome"
             android:exported="false" />
         <activity
-            android:name=".TutorHome"
+            android:name=".ui.tutor.TutorHome"
             android:exported="false" />
         <activity
-            android:name=".AdminRequestsList"
+            android:name=".ui.admin.AdminRequestsList"
             android:exported="false" />
         <activity
-            android:name=".WelcomePage"
+            android:name=".ui.WelcomePage"
             android:exported="false" />
         <activity
-            android:name=".LogIn"
+            android:name=".ui.LogIn"
             android:exported="false" />
         <activity
-            android:name=".RegisterTutor"
+            android:name=".ui.admin.RegisterTutor"
             android:exported="false" />
         <activity
-            android:name=".RegisterStudent"
+            android:name=".ui.admin.RegisterStudent"
             android:exported="false" />
         <activity
-            android:name=".Register"
+            android:name=".ui.Register"
             android:exported="false" />
         <activity
-            android:name=".MainActivity"
+            android:name=".ui.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

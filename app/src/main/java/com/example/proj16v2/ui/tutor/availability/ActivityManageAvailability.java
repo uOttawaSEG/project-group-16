@@ -1,4 +1,4 @@
-package com.example.proj16v2;
+package com.example.proj16v2.ui.tutor.availability;
 
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
@@ -12,6 +12,9 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.example.proj16v2.Data.DatabaseHelper;
+import com.example.proj16v2.R;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;

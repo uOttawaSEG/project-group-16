@@ -1,4 +1,4 @@
-package com.example.proj16v2;
+package com.example.proj16v2.ui;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -14,6 +14,13 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+
+import com.example.proj16v2.ui.admin.AdminRequestsList;
+import com.example.proj16v2.ui.admin.Administrator;
+import com.example.proj16v2.Data.DatabaseHelper;
+import com.example.proj16v2.R;
+import com.example.proj16v2.ui.student.StudentHome;
+import com.example.proj16v2.ui.tutor.TutorHome;
 
 public class LogIn extends AppCompatActivity {
     private DatabaseHelper dbHelper;

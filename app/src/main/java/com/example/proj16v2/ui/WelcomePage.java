@@ -1,4 +1,4 @@
-package com.example.proj16v2;
+package com.example.proj16v2.ui;
 
 import android.os.Bundle;
 
@@ -7,6 +7,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+
+import com.example.proj16v2.R;
 
 public class WelcomePage extends AppCompatActivity {
 

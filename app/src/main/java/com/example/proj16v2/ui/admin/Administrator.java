@@ -1,4 +1,6 @@
-package com.example.proj16v2;
+package com.example.proj16v2.ui.admin;
+
+import com.example.proj16v2.Model.User;
 
 public class Administrator extends User {
     private static final String ADMIN_EMAIL = "admin@uottawa.ca";
