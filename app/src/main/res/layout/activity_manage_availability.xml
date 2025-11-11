@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/manageAvailabilityRoot"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="16dp">
+
+    <EditText
+        android:id="@+id/etDate"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:hint="Date (YYYY-MM-DD)"
+        android:focusable="false"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/btnPickDate"
+        android:layout_marginEnd="8dp"/>
+
+    <Button
+        android:id="@+id/btnPickDate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Pick"
+        app:layout_constraintTop_toTopOf="@id/etDate"
+        app:layout_constraintBottom_toBottomOf="@id/etDate"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+    <EditText
+        android:id="@+id/etStartTime"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:hint="Start (HH:MM)"
+        android:focusable="false"
+        app:layout_constraintTop_toBottomOf="@id/etDate"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/btnPickStart"
+        android:layout_marginTop="12dp"
+        android:layout_marginEnd="8dp"/>
+
+    <Button
+        android:id="@+id/btnPickStart"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Pick"
+        app:layout_constraintTop_toTopOf="@id/etStartTime"
+        app:layout_constraintBottom_toBottomOf="@id/etStartTime"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+
+    <EditText
+        android:id="@+id/etEndTime"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:hint="End (HH:MM)"
+        android:focusable="false"
+        app:layout_constraintTop_toBottomOf="@id/etStartTime"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/btnPickEnd"
+        android:layout_marginTop="12dp"
+        android:layout_marginEnd="8dp"/>
+
+    <Button
+        android:id="@+id/btnPickEnd"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Pick"
+        app:layout_constraintTop_toTopOf="@id/etEndTime"
+        app:layout_constraintBottom_toBottomOf="@id/etEndTime"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+    <Button
+        android:id="@+id/btnCreateSlot"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Create Slot"
+        app:layout_constraintTop_toBottomOf="@id/etEndTime"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="16dp"/>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvSlots"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintTop_toBottomOf="@id/btnCreateSlot"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="16dp"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
