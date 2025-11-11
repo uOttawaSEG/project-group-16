@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="8dp"
+    android:elevation="2dp"
+    android:foreground="?attr/selectableItemBackground">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="12dp">
+
+        <!-- required by adapter -->
+        <TextView
+            android:id="@+id/tvSlotDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="2025-11-10"
+            android:textStyle="bold"
+            android:textSize="16sp" />
+
+        <!-- required by adapter -->
+        <TextView
+            android:id="@+id/tvSlotTimeRange"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="09:00 - 09:30"
+            android:layout_marginTop="4dp" />
+
+        <!-- required by adapter -->
+        <Button
+            android:id="@+id/btnDeleteSlot"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Delete Slot"
+            android:layout_marginTop="6dp" />
+    </LinearLayout>
+</androidx.cardview.widget.CardView>

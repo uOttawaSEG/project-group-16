@@ -15,6 +15,9 @@
             android:name=".PastSessions"
             android:exported="false" />
         <activity
+            android:name=".RowAvailibilitySlot"
+            android:exported="false" />
+        <activity
             android:name=".ActivityUpcomingSessions"
             android:exported="false" />
         <activity

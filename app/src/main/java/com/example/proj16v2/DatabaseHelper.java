@@ -459,4 +459,90 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         if (c != null) c.close();
         return avg;
     }
+
+    /* ===================== D3: PENDING REQUESTS HELPERS ===================== */
+
+    /** List all pending requests for a tutor, joined with student names. */
+    public Cursor getPendingRequestsForTutor(long tutorId) {
+        String sql =
+                "SELECT s.session_id, s.student_id, s.tutor_id, s.course_code, " +
+                        "       s.date, s.start_time, s.end_time, " +
+                        "       u.first_name, u.last_name " +
+                        "FROM Sessions s " +
+                        "JOIN Users u ON u.user_id = s.student_id " +
+                        "WHERE s.tutor_id = ? AND s.status = 'requested' " +
+                        "ORDER BY s.date ASC, s.start_time ASC";
+        return getReadableDatabase().rawQuery(sql, new String[]{ String.valueOf(tutorId) });
+    }
+
+    /** Optional: show rejected ones for the tutor (nice to have for your “Rejected” list). */
+    public Cursor getRejectedRequestsForTutor(long tutorId) {
+        String sql =
+                "SELECT s.session_id, s.student_id, s.tutor_id, s.course_code, " +
+                        "       s.date, s.start_time, s.end_time, " +
+                        "       u.first_name, u.last_name " +
+                        "FROM Sessions s " +
+                        "JOIN Users u ON u.user_id = s.student_id " +
+                        "WHERE s.tutor_id = ? AND s.status = 'rejected' " +
+                        "ORDER BY s.date DESC, s.start_time DESC";
+        return getReadableDatabase().rawQuery(sql, new String[]{ String.valueOf(tutorId) });
+    }
+
+    /**
+     * Prevent double-booking on approval: returns true if the proposed time overlaps an
+     * already approved session for this tutor on that date.
+     * Overlap condition: NOT( newStart >= existingEnd OR newEnd <= existingStart )
+     */
+    public boolean tutorHasApprovedOverlap(long tutorId, String date, String start, String end) {
+        String sql =
+                "SELECT 1 FROM Sessions " +
+                        "WHERE tutor_id=? AND date=? " +
+                        "  AND status IN ('approved') " +
+                        "  AND NOT( ? >= end_time OR ? <= start_time ) " +
+                        "LIMIT 1";
+        Cursor c = getReadableDatabase().rawQuery(sql,
+                new String[]{ String.valueOf(tutorId), date, start, end });
+        boolean conflict = (c != null && c.moveToFirst());
+        if (c != null) c.close();
+        return conflict;
+    }
+
+    /** Convenience wrappers if you want explicit names in your UI layer. */
+    public int approveRequest(long sessionId) {
+        return updateSessionStatus(sessionId, "approved", null, null);
+    }
+    public int rejectRequest(long sessionId) {
+        return updateSessionStatus(sessionId, "rejected", null, null);
+    }
+
+    // Upcoming = approved sessions that are later today or future dates
+    public Cursor getUpcomingSessionsForTutor(long tutorId, String todayDate, String nowTime) {
+        String sql =
+                "SELECT s.session_id, s.student_id, s.course_code, s.date, s.start_time, s.end_time, " +
+                        "       u.first_name, u.last_name " +
+                        "FROM Sessions s " +
+                        "JOIN Users u ON u.user_id = s.student_id " +
+                        "WHERE s.tutor_id=? AND s.status='approved' AND " +
+                        "      (s.date > ? OR (s.date = ? AND s.start_time >= ?)) " +
+                        "ORDER BY s.date ASC, s.start_time ASC";
+        return getReadableDatabase().rawQuery(sql,
+                new String[]{ String.valueOf(tutorId), todayDate, todayDate, nowTime });
+    }
+
+    // Past = completed OR (approved sessions that already ended)
+    public Cursor getPastSessionsForTutor(long tutorId, String todayDate, String nowTime) {
+        String sql =
+                "SELECT s.session_id, s.student_id, s.course_code, s.date, s.start_time, s.end_time, " +
+                        "       s.status, u.first_name, u.last_name " +
+                        "FROM Sessions s " +
+                        "JOIN Users u ON u.user_id = s.student_id " +
+                        "WHERE s.tutor_id=? AND (" +
+                        "      s.status='completed' " +
+                        "   OR (s.status='approved' AND (s.date < ? OR (s.date = ? AND s.end_time < ?)))" +
+                        ") ORDER BY s.date DESC, s.start_time DESC";
+        return getReadableDatabase().rawQuery(sql,
+                new String[]{ String.valueOf(tutorId), todayDate, todayDate, nowTime });
+    }
+
+
 }

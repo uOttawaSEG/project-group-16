@@ -30,7 +30,7 @@ public class TutorHome extends AppCompatActivity {
         });
 
         btnMySlots.setOnClickListener(v -> {
-            Intent i = new Intent(TutorHome.this, ActivityManageAvailability.class);
+            Intent i = new Intent(TutorHome.this, RowAvailibilitySlot.class);
             i.putExtra("user_id", userId);
             startActivity(i);
         });
