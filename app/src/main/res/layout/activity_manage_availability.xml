@@ -12,6 +12,15 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 
+    <Button
+        android:id="@+id/btnBack"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Back"
+        android:layout_margin="8dp"
+        android:padding="8dp" />
+
+
     <!-- Date -->
     <LinearLayout
         android:orientation="horizontal"

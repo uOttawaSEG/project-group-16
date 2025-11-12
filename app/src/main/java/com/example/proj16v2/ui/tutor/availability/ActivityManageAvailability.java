@@ -57,6 +57,7 @@ public class ActivityManageAvailability extends AppCompatActivity {
         Button btnPickStart = findViewById(R.id.btnPickStart);
         Button btnPickEnd   = findViewById(R.id.btnPickEnd);
         Button btnCreate    = findViewById(R.id.btnCreateSlot);
+        Button btnBack = findViewById(R.id.btnBack);
 
         rv = findViewById(R.id.rvSlots);
         rv.setLayoutManager(new LinearLayoutManager(this));
@@ -70,6 +71,7 @@ public class ActivityManageAvailability extends AppCompatActivity {
         btnPickDate.setOnClickListener(v -> pickDate());
         btnPickStart.setOnClickListener(v -> pickTime(etStartTime));
         btnPickEnd.setOnClickListener(v -> pickTime(etEndTime));
+        btnBack.setOnClickListener(v -> finish());
 
         // create
         btnCreate.setOnClickListener(v -> saveSlot());

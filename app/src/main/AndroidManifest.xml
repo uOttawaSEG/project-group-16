@@ -12,10 +12,10 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Proj16v2">
         <activity
-            android:name=".ui.tutor.sessions.PastSessions"
+            android:name=".ui.tutor.availability.RowAvailabilitySlot"
             android:exported="false" />
         <activity
-            android:name=".ui.tutor.availability.RowAvailibilitySlot"
+            android:name=".ui.tutor.sessions.PastSessions"
             android:exported="false" />
         <activity
             android:name=".ui.tutor.sessions.ActivityUpcomingSessions"

@@ -43,7 +43,7 @@ public class SlotsAdapter extends RecyclerView.Adapter<SlotsAdapter.VH> {
 
     @NonNull @Override public VH onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.item_row_availability_slot, parent, false);
+                .inflate(R.layout.item_row_availability_slot, parent, false); // <-- ROW layout
         return new VH(v);
     }
 

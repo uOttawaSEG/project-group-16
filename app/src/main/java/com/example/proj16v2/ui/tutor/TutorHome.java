@@ -8,7 +8,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.proj16v2.R;
 import com.example.proj16v2.ui.tutor.availability.ActivityManageAvailability;
-import com.example.proj16v2.ui.tutor.availability.RowAvailibilitySlot;
+import com.example.proj16v2.ui.tutor.availability.RowAvailabilitySlot;
 import com.example.proj16v2.ui.tutor.requests.ActivityPendingRequests;
 import com.example.proj16v2.ui.tutor.sessions.ActivityUpcomingSessions;
 import com.example.proj16v2.ui.tutor.sessions.PastSessions;
@@ -37,12 +37,12 @@ public class TutorHome extends AppCompatActivity {
         });
 
         btnMySlots.setOnClickListener(v -> {
-            Intent i = new Intent(TutorHome.this, RowAvailibilitySlot.class);
+            Intent i = new Intent(TutorHome.this,
+                    com.example.proj16v2.ui.tutor.availability.RowAvailabilitySlot.class);
             i.putExtra("user_id", userId);
             startActivity(i);
         });
 
-        // Stubs for D3 screens (create these activities or change targets)
         btnPendingRequests.setOnClickListener(v -> {
             Intent i = new Intent(TutorHome.this, ActivityPendingRequests.class);
             i.putExtra("user_id", userId);

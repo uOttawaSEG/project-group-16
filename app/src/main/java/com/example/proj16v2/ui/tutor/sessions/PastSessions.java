@@ -2,15 +2,17 @@ package com.example.proj16v2.ui.tutor.sessions;
 
 import android.database.Cursor;
 import android.os.Bundle;
-import android.widget.Button;
+import android.view.View;
+import android.widget.TextView;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.proj16v2.Data.DatabaseHelper;
 import com.example.proj16v2.R;
-import com.example.proj16v2.ui.tutor.PastSessionsAdapter;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -21,43 +23,61 @@ public class PastSessions extends AppCompatActivity {
 
     private DatabaseHelper db;
     private int tutorId;
-    private PastSessionsAdapter adapter;
+    private TextView tvEmpty;
+    private RowSessionPast adapter;
 
     @Override
     protected void onCreate(Bundle b) {
         super.onCreate(b);
-        setContentView(R.layout.activity_past_sessions); // has btnBack + rvPast
-        db = new DatabaseHelper(this);
+        setContentView(R.layout.activity_past_sessions);
+
         tutorId = getIntent().getIntExtra("user_id", -1);
+        db = new DatabaseHelper(this);
 
-        ((Button)findViewById(R.id.btnBack)).setOnClickListener(v -> finish());
+        View back = findViewById(R.id.btnBack);
+        if (back != null) back.setOnClickListener(v -> finish());
 
+        tvEmpty = findViewById(R.id.tvEmpty);
         RecyclerView rv = findViewById(R.id.rvPast);
         rv.setLayoutManager(new LinearLayoutManager(this));
-        adapter = new PastSessionsAdapter();
+        adapter = new RowSessionPast();
         rv.setAdapter(adapter);
 
         load();
     }
 
     private void load() {
-        String today = new SimpleDateFormat("yyyy-MM-dd", Locale.US).format(new Date());
-        String now   = new SimpleDateFormat("HH:mm", Locale.US).format(new Date());
+        Cursor c = db.getSessionsForTutor(tutorId);
+        List<RowSessionPast.Item> items = new ArrayList<>();
 
-        List<PastSessionsAdapter.Item> items = new ArrayList<>();
-        Cursor c = db.getPastSessionsForTutor(tutorId, today, now);
         while (c.moveToNext()) {
-            long id = c.getLong(0);
-            String course = c.getString(2);
-            String date   = c.getString(3);
-            String start  = c.getString(4);
-            String end    = c.getString(5);
-            String first  = c.getString(7);
-            String last   = c.getString(8);
-            String name   = ((first==null?"":first) + " " + (last==null?"":last)).trim();
-            items.add(new PastSessionsAdapter.Item(id, name, course, date, start, end));
+            long sessionId = c.getLong(0);
+            long studentId = c.getLong(1);
+            String course  = c.getString(3);
+            String date    = c.getString(4);
+            String start   = c.getString(5);
+            String end     = c.getString(6);
+            String status  = c.getString(7);
+
+            boolean byStatus = "completed".equals(status) || "cancelled".equals(status);
+            if (byStatus || isPast(date, end)) {
+                String studentName = "Student #" + studentId; // (optional) look up name later
+                items.add(new RowSessionPast.Item(sessionId, studentName, course, date, start, end, status));
+            }
         }
         c.close();
+
+        tvEmpty.setVisibility(items.isEmpty() ? View.VISIBLE : View.GONE);
         adapter.setData(items);
+    }
+
+    private boolean isPast(String date, String end) {
+        try {
+            Date when = new SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.US)
+                    .parse(date + " " + end);
+            return when != null && when.before(new Date());
+        } catch (ParseException e) {
+            return false;
+        }
     }
 }

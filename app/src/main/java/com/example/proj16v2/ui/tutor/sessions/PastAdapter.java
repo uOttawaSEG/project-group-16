@@ -13,7 +13,7 @@ import com.example.proj16v2.R;
 import java.util.ArrayList;
 import java.util.List;
 
-public class RowSessionPast extends RecyclerView.Adapter<RowSessionPast.VH> {
+public class PastAdapter extends RecyclerView.Adapter<PastAdapter.VH> {
 
     public static class Item {
         public long id;
