@@ -1,14 +1,36 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:padding="16dp"
-    android:layout_width="match_parent" android:layout_height="match_parent">
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:padding="16dp"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
-    <TextView android:text="Student Home" android:textStyle="bold"
-        android:textSize="20sp" android:layout_width="wrap_content" android:layout_height="wrap_content"/>
+    <TextView
+        android:text="Student Home"
+        android:textStyle="bold"
+        android:textSize="20sp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
 
-    <Button android:id="@+id/btnSearchByCourse" android:text="Search by Course"
-        android:layout_width="match_parent" android:layout_height="wrap_content"/>
-    <Button android:id="@+id/btnMyRequests" android:text="My Requests / Sessions"
-        android:layout_width="match_parent" android:layout_height="wrap_content"/>
-    <Button android:id="@+id/btnPastSessions" android:text="Past Sessions &amp; Rate Tutor"
-        android:layout_width="match_parent" android:layout_height="wrap_content"/>
+    <Button
+        android:id="@+id/btnSearchByCourse"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Search by Course" />
+
+    <Button
+        android:id="@+id/btnMyRequests"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="My Requests / Sessions"
+        android:layout_marginTop="16dp" />
+
+    <Button
+        android:id="@+id/btnPastRate"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Past Sessions and Rate Tutor"
+        android:layout_marginTop="16dp" />
+
+
 </LinearLayout>

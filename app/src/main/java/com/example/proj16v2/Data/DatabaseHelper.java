@@ -544,5 +544,18 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 new String[]{ String.valueOf(tutorId), todayDate, todayDate, nowTime });
     }
 
+    public Cursor getOpenSlots() {
+        // A slot is "open" if there is NO session with same tutor/date/start in requested/approved
+        String sql =
+                "SELECT a.slot_id, a.tutor_id, a.date, a.start_time, a.end_time, a.is_manual_approval " +
+                        "FROM AvailabilitySlots a " +
+                        "LEFT JOIN Sessions s " +
+                        "  ON s.tutor_id = a.tutor_id AND s.date = a.date AND s.start_time = a.start_time " +
+                        "  AND s.status IN ('requested','approved') " +
+                        "WHERE s.session_id IS NULL " +
+                        "ORDER BY a.date ASC, a.start_time ASC";
+        return getReadableDatabase().rawQuery(sql, null);
+    }
+
 
 }
