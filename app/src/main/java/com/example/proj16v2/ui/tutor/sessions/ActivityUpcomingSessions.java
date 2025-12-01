@@ -10,10 +10,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.proj16v2.Data.DatabaseHelper;
 import com.example.proj16v2.R;
+import com.example.proj16v2.Data.DatabaseHelper;
 
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -28,8 +27,8 @@ public class ActivityUpcomingSessions extends AppCompatActivity {
     private RowSessionUpcoming adapter;
 
     @Override
-    protected void onCreate(Bundle b) {
-        super.onCreate(b);
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_upcoming_sessions);
 
         tutorId = getIntent().getIntExtra("user_id", -1);
@@ -39,9 +38,15 @@ public class ActivityUpcomingSessions extends AppCompatActivity {
         if (back != null) back.setOnClickListener(v -> finish());
 
         tvEmpty = findViewById(R.id.tvEmpty);
+
         RecyclerView rv = findViewById(R.id.rvUpcoming);
         rv.setLayoutManager(new LinearLayoutManager(this));
-        adapter = new RowSessionUpcoming(this::cancelSession);
+
+        // ↓↓↓ THIS is the "activity callback" wiring ↓↓↓
+        adapter = new RowSessionUpcoming(
+                this::cancelSession,    // onCancel
+                this::completeSession   // onComplete
+        );
         rv.setAdapter(adapter);
 
         load();
@@ -55,16 +60,16 @@ public class ActivityUpcomingSessions extends AppCompatActivity {
             long sessionId = c.getLong(0);
             long studentId = c.getLong(1);
             String course  = c.getString(3);
-            String date    = c.getString(4); // yyyy-MM-dd
-            String start   = c.getString(5); // HH:mm
-            String end     = c.getString(6); // HH:mm
-            String status  = c.getString(7); // approved/rejected/...
+            String date    = c.getString(4);
+            String start   = c.getString(5);
+            String end     = c.getString(6);
+            String status  = c.getString(7);
 
             if (!"approved".equals(status)) continue;
-            if (isFuture(date, start)) {
-                String studentName = "Student #" + studentId; // (optional) look up name later
-                items.add(new RowSessionUpcoming.Item(sessionId, studentName, course, date, start, end));
-            }
+            if (!isFuture(date, start)) continue;
+
+            String studentName = "Student #" + studentId; // or look up real name
+            items.add(new RowSessionUpcoming.Item(sessionId, studentName, course, date, start, end));
         }
         c.close();
 
@@ -72,20 +77,31 @@ public class ActivityUpcomingSessions extends AppCompatActivity {
         adapter.setData(items);
     }
 
-    private boolean isFuture(String date, String start) {
+    // ---------- helpers & callbacks ----------
+
+    private boolean isFuture(String ymd, String hm) {
         try {
             Date when = new SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.US)
-                    .parse(date + " " + start);
+                    .parse(ymd + " " + hm);
             return when != null && when.after(new Date());
-        } catch (ParseException e) {
+        } catch (Exception e) {
             return false;
         }
     }
 
+    private String nowIso() {
+        return new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", Locale.US).format(new Date());
+    }
+
     private void cancelSession(long sessionId) {
-        int rows = db.updateSessionStatus(sessionId, "cancelled", "tutor",
-                new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", Locale.US).format(new Date()));
-        Toast.makeText(this, rows > 0 ? "Cancelled" : "Failed", Toast.LENGTH_SHORT).show();
+        int rows = db.updateSessionStatus(sessionId, "cancelled", "tutor", nowIso());
+        Toast.makeText(this, rows > 0 ? "Session cancelled" : "Failed to cancel", Toast.LENGTH_SHORT).show();
+        load();
+    }
+
+    private void completeSession(long sessionId) {
+        int rows = db.updateSessionStatus(sessionId, "completed", null, null);
+        Toast.makeText(this, rows > 0 ? "Marked as completed" : "Failed to update", Toast.LENGTH_SHORT).show();
         load();
     }
 }

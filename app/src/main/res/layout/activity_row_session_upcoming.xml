@@ -25,12 +25,18 @@
             android:text="YYYY-MM-DD  HH:MM - HH:MM"
             android:layout_marginTop="4dp"/>
 
-        <!-- Optional cancel; remove if not wanted -->
         <Button
             android:id="@+id/btnCancel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Cancel"
             android:layout_marginTop="8dp"/>
+        <Button
+            android:id="@+id/btnMarkCompleted"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Mark Completed"
+            android:layout_marginTop="8dp"/>
+
     </LinearLayout>
 </androidx.cardview.widget.CardView>

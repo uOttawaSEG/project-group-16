@@ -12,6 +12,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Proj16v2">
         <activity
+            android:name=".ui.student.RateTutorActivity"
+            android:exported="false" />
+        <activity
             android:name=".ui.student.StudentPast"
             android:exported="false" />
         <activity

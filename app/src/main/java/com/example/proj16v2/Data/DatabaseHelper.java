@@ -557,5 +557,31 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return getReadableDatabase().rawQuery(sql, null);
     }
 
+    // Get "First Last" by user_id
+    public @Nullable String getUserFullName(int userId) {
+        Cursor c = getReadableDatabase().query(
+                "Users", new String[]{"first_name","last_name"},
+                "user_id=?", new String[]{String.valueOf(userId)},
+                null,null,null);
+        String name = null;
+        if (c != null && c.moveToFirst()) {
+            name = c.getString(0) + " " + c.getString(1);
+        }
+        if (c != null) c.close();
+        return name;
+    }
+
+    // Check if a session already has a rating
+    public boolean hasRating(long sessionId) {
+        Cursor c = getReadableDatabase().query(
+                "Ratings", new String[]{"rating_id"},
+                "session_id=?", new String[]{String.valueOf(sessionId)},
+                null,null,null);
+        boolean exists = (c != null && c.moveToFirst());
+        if (c != null) c.close();
+        return exists;
+    }
+
+
 
 }
