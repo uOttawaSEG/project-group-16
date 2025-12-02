@@ -659,23 +659,49 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         );
     }
 
-    // Open slots for tutors who offer a given course (by exact course_name match).
+    // All open slots for a given course (based on tutors who offer that course)
     public Cursor getOpenSlotsForCourse(String courseCode) {
+        // normalize course string a bit
+        String c = courseCode.trim();
+
         String sql =
                 "SELECT a.slot_id, a.tutor_id, a.date, a.start_time, a.end_time, a.is_manual_approval " +
                         "FROM AvailabilitySlots a " +
-                        "JOIN TutorCourses tc ON a.tutor_id = tc.tutor_id " +
+                        "JOIN TutorCourses tc ON tc.tutor_id = a.tutor_id " +
                         "LEFT JOIN Sessions s " +
                         "  ON s.tutor_id = a.tutor_id " +
                         " AND s.date = a.date " +
                         " AND s.start_time = a.start_time " +
                         " AND s.status IN ('requested','approved') " +
-                        "WHERE s.session_id IS NULL " +
+                        "WHERE tc.course_name = ? " +
+                        "  AND s.session_id IS NULL " +
                         "  AND a.date >= date('now') " +
-                        "  AND tc.course_name = ? " +
                         "ORDER BY a.date ASC, a.start_time ASC";
 
-        return getReadableDatabase().rawQuery(sql, new String[]{courseCode});
+        return getReadableDatabase().rawQuery(sql, new String[]{c});
+    }
+
+    // Check if the student already has a requested/approved session at this date & time
+    public boolean studentHasActiveSessionForSlot(long studentId,
+                                                  long tutorId,
+                                                  String date,
+                                                  String startTime) {
+        Cursor c = getReadableDatabase().rawQuery(
+                "SELECT 1 FROM Sessions " +
+                        "WHERE student_id=? " +
+                        "  AND date=? " +
+                        "  AND start_time=? " +
+                        "  AND status IN ('requested','approved') " +
+                        "LIMIT 1",
+                new String[]{
+                        String.valueOf(studentId),
+                        date,
+                        startTime
+                }
+        );
+        boolean exists = c != null && c.moveToFirst();
+        if (c != null) c.close();
+        return exists;
     }
 
 
