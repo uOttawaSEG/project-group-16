@@ -2,18 +2,40 @@
     android:orientation="vertical" android:padding="16dp"
     android:layout_width="match_parent" android:layout_height="match_parent">
 
-    <TextView android:text="Tutor Home" android:textStyle="bold"
-        android:textSize="20sp" android:layout_width="wrap_content" android:layout_height="wrap_content"/>
+    <TextView android:text="Tutor Home"
+        android:textStyle="bold"
+        android:textSize="20sp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+    <TextView
+        android:id="@+id/tvTutorRating"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Average rating: N/A"
+        android:layout_marginTop="8dp" />
 
-    <!-- Buttons you’ll hook up next -->
-    <Button android:id="@+id/btnCreateSlot" android:text="Create Availability Slot"
-        android:layout_width="match_parent" android:layout_height="wrap_content"/>
-    <Button android:id="@+id/btnPendingRequests" android:text="Pending Session Requests"
-        android:layout_width="match_parent" android:layout_height="wrap_content"/>
-    <Button android:id="@+id/btnUpcoming" android:text="Upcoming Sessions"
-        android:layout_width="match_parent" android:layout_height="wrap_content"/>
-    <Button android:id="@+id/btnPast" android:text="Past Sessions"
-        android:layout_width="match_parent" android:layout_height="wrap_content"/>
-    <Button android:id="@+id/btnMySlots" android:text="My Availability Slots"
-        android:layout_width="match_parent" android:layout_height="wrap_content"/>
+    <Button android:id="@+id/btnCreateSlot"
+        android:text="Create Availability Slot"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+    <Button android:id="@+id/btnPendingRequests"
+        android:text="Pending Session Requests"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+    <Button android:id="@+id/btnUpcoming"
+        android:text="Upcoming Sessions"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+    <Button android:id="@+id/btnPast"
+        android:text="Past Sessions"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+    <Button android:id="@+id/btnMySlots"
+        android:text="My Availability Slots"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
 </LinearLayout>

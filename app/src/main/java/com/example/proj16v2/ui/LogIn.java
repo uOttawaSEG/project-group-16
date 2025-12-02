@@ -127,6 +127,7 @@ public class LogIn extends AppCompatActivity {
                                     intent = new Intent(LogIn.this, TutorHome.class);
                                 } else if ("Student".equalsIgnoreCase(userRole)) {
                                     intent = new Intent(LogIn.this, StudentHome.class);
+
                                 } else {
                                     intent = new Intent(LogIn.this, WelcomePage.class);    // fallback
                                 }

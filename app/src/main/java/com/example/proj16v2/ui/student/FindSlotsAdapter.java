@@ -7,6 +7,8 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import com.example.proj16v2.R;
 import java.util.*;
+import java.util.Locale;
+
 
 public class FindSlotsAdapter extends RecyclerView.Adapter<FindSlotsAdapter.VH> {
 
@@ -14,10 +16,25 @@ public class FindSlotsAdapter extends RecyclerView.Adapter<FindSlotsAdapter.VH> 
         public long slotId, tutorId;
         public String date, start, end;
         public boolean isManual;
-        public Item(long slotId, long tutorId, String date, String start, String end, boolean isManual) {
-            this.slotId=slotId; this.tutorId=tutorId; this.date=date; this.start=start; this.end=end; this.isManual=isManual;
+        public String tutorName;
+        public float avgRating;
+
+        public Item(long slotId, long tutorId,
+                    String date, String start, String end,
+                    boolean isManual,
+                    String tutorName,
+                    float avgRating) {
+            this.slotId = slotId;
+            this.tutorId = tutorId;
+            this.date = date;
+            this.start = start;
+            this.end = end;
+            this.isManual = isManual;
+            this.tutorName = tutorName;
+            this.avgRating = avgRating;
         }
     }
+
 
     public interface OnRequest { void run(Item it); }
 
@@ -33,12 +50,31 @@ public class FindSlotsAdapter extends RecyclerView.Adapter<FindSlotsAdapter.VH> 
         return new VH(row);
     }
 
-    @Override public void onBindViewHolder(@NonNull VH h, int pos) {
+    @Override
+    public void onBindViewHolder(@NonNull VH h, int pos) {
         Item it = data.get(pos);
-        h.line1.setText("Tutor #" + it.tutorId + " • " + (it.isManual ? "Manual approval" : "Auto"));
+
+        // Build rating text
+        String ratingText;
+        if (it.avgRating <= 0f) {
+            ratingText = "no ratings yet";
+        } else {
+            ratingText = String.format(Locale.US, "%.1f★", it.avgRating);
+        }
+
+        // Line 1 → Tutor Name + Rating + Manual/Auto Tag
+        h.line1.setText(
+                it.tutorName + " (" + ratingText + ") • " +
+                        (it.isManual ? "Manual approval" : "Auto")
+        );
+
+        // Line 2 → Date + Time
         h.line2.setText(it.date + "   " + it.start + " - " + it.end);
+
+        // Request button
         h.btnRequest.setOnClickListener(v -> onRequest.run(it));
     }
+
 
     @Override public int getItemCount() { return data.size(); }
 
@@ -48,4 +84,6 @@ public class FindSlotsAdapter extends RecyclerView.Adapter<FindSlotsAdapter.VH> 
             line1=v.findViewById(R.id.tvLine1); line2=v.findViewById(R.id.tvLine2); btnRequest=v.findViewById(R.id.btnRequest);
         }
     }
+
+
 }

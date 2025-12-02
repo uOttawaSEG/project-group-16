@@ -42,6 +42,7 @@ public class StudentFindSlots extends AppCompatActivity {
     private void load() {
         List<FindSlotsAdapter.Item> items = new ArrayList<>();
         Cursor c = db.getOpenSlots();
+
         while (c.moveToNext()) {
             long slotId  = c.getLong(0);
             long tutorId = c.getLong(1);
@@ -49,12 +50,23 @@ public class StudentFindSlots extends AppCompatActivity {
             String start = c.getString(3);
             String end   = c.getString(4);
             boolean manual = c.getInt(5) == 1;
-            items.add(new FindSlotsAdapter.Item(slotId, tutorId, date, start, end, manual));
+
+            String name = db.getUserFullName((int) tutorId);
+            if (name == null) name = "Tutor #" + tutorId;
+
+            float avg = db.getAverageRatingForTutor(tutorId);
+
+            items.add(new FindSlotsAdapter.Item(
+                    slotId, tutorId, date, start, end,
+                    manual, name, avg
+            ));
         }
         c.close();
+
         tvEmpty.setVisibility(items.isEmpty() ? View.VISIBLE : View.GONE);
         adapter.setData(items);
     }
+
 
     private void requestSlot(FindSlotsAdapter.Item it) {
         // For D3: let student choose a courseCode later; for now use placeholder or prompt.
