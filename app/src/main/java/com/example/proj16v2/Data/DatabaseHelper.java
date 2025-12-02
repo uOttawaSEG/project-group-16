@@ -544,18 +544,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 new String[]{ String.valueOf(tutorId), todayDate, todayDate, nowTime });
     }
 
-    public Cursor getOpenSlots() {
-        // A slot is "open" if there is NO session with same tutor/date/start in requested/approved
-        String sql =
-                "SELECT a.slot_id, a.tutor_id, a.date, a.start_time, a.end_time, a.is_manual_approval " +
-                        "FROM AvailabilitySlots a " +
-                        "LEFT JOIN Sessions s " +
-                        "  ON s.tutor_id = a.tutor_id AND s.date = a.date AND s.start_time = a.start_time " +
-                        "  AND s.status IN ('requested','approved') " +
-                        "WHERE s.session_id IS NULL " +
-                        "ORDER BY a.date ASC, a.start_time ASC";
-        return getReadableDatabase().rawQuery(sql, null);
-    }
 
     // Get "First Last" by user_id
     public @Nullable String getUserFullName(int userId) {
@@ -582,6 +570,113 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return exists;
     }
 
+    // No-arg version: all open slots, any course
+    public Cursor getOpenSlots() {
+        return getOpenSlots(null);
+    }
+
+    // Filtered version: optional course filter
+    public Cursor getOpenSlots(@androidx.annotation.Nullable String courseFilter) {
+        // today (so we don't show past slots)
+        String today = new java.text.SimpleDateFormat("yyyy-MM-dd",
+                java.util.Locale.US).format(new java.util.Date());
+
+        // A slot is "open" if:
+        // - there is NO Session with same tutor/date/start (requested/approved)
+        // - date is today or later
+        StringBuilder sql = new StringBuilder(
+                "SELECT a.slot_id, a.tutor_id, a.date, a.start_time, a.end_time, a.is_manual_approval " +
+                        "FROM AvailabilitySlots a " +
+                        "LEFT JOIN Sessions s ON s.tutor_id = a.tutor_id " +
+                        "  AND s.date = a.date " +
+                        "  AND s.start_time = a.start_time " +
+                        "WHERE s.session_id IS NULL " +
+                        "  AND a.date >= ? "
+        );
+
+        java.util.List<String> args = new java.util.ArrayList<>();
+        args.add(today);
+
+        // If we have a course filter, require that the tutor teaches that course
+        if (courseFilter != null && !courseFilter.isEmpty()) {
+            sql.append(
+                    "AND EXISTS ( " +
+                            "  SELECT 1 FROM TutorCourses tc " +
+                            "  WHERE tc.tutor_id = a.tutor_id " +
+                            "    AND tc.course_name LIKE ? " +
+                            ") "
+            );
+            args.add("%" + courseFilter + "%");
+        }
+
+        sql.append("ORDER BY a.date ASC, a.start_time ASC");
+
+        return getReadableDatabase().rawQuery(
+                sql.toString(),
+                args.toArray(new String[0])
+        );
+    }
+
+    public String getTutorCoursesCsv(long tutorId) {
+        android.database.Cursor c = getReadableDatabase().query(
+                "TutorCourses",
+                new String[]{"course_name"},
+                "tutor_id=?",
+                new String[]{String.valueOf(tutorId)},
+                null, null, null
+        );
+        StringBuilder sb = new StringBuilder();
+        if (c != null) {
+            while (c.moveToNext()) {
+                String course = c.getString(0);
+                if (sb.length() > 0) sb.append(", ");
+                sb.append(course);
+            }
+            c.close();
+        }
+        return sb.toString();
+    }
+
+
+    // Open slots where the tutor offers a matching course
+    public Cursor getOpenSlotsByCourse(String courseQuery) {
+        String today = new java.text.SimpleDateFormat("yyyy-MM-dd", java.util.Locale.US)
+                .format(new java.util.Date());
+        String like = "%" + courseQuery + "%";
+
+        String sql =
+                "SELECT s.slot_id, s.tutor_id, s.date, s.start_time, s.end_time, s.is_manual_approval " +
+                        "FROM AvailabilitySlots s " +
+                        "LEFT JOIN TutorCourses tc ON tc.tutor_id = s.tutor_id " +
+                        "LEFT JOIN Users u ON u.user_id = s.tutor_id " +
+                        "WHERE s.date >= ? " +
+                        "AND (tc.course_name LIKE ? OR u.coursesOffered LIKE ?) " +
+                        "ORDER BY s.date ASC, s.start_time ASC";
+
+        return getReadableDatabase().rawQuery(
+                sql,
+                new String[]{today, like, like}
+        );
+    }
+
+    // Open slots for tutors who offer a given course (by exact course_name match).
+    public Cursor getOpenSlotsForCourse(String courseCode) {
+        String sql =
+                "SELECT a.slot_id, a.tutor_id, a.date, a.start_time, a.end_time, a.is_manual_approval " +
+                        "FROM AvailabilitySlots a " +
+                        "JOIN TutorCourses tc ON a.tutor_id = tc.tutor_id " +
+                        "LEFT JOIN Sessions s " +
+                        "  ON s.tutor_id = a.tutor_id " +
+                        " AND s.date = a.date " +
+                        " AND s.start_time = a.start_time " +
+                        " AND s.status IN ('requested','approved') " +
+                        "WHERE s.session_id IS NULL " +
+                        "  AND a.date >= date('now') " +
+                        "  AND tc.course_name = ? " +
+                        "ORDER BY a.date ASC, a.start_time ASC";
+
+        return getReadableDatabase().rawQuery(sql, new String[]{courseCode});
+    }
 
 
 

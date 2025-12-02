@@ -10,39 +10,40 @@ import com.example.proj16v2.R;
 
 public class StudentHome extends AppCompatActivity {
 
-    private int userId;
+    private int studentId;
 
     @Override
     protected void onCreate(Bundle b) {
         super.onCreate(b);
         setContentView(R.layout.activity_student_home);
 
+        // get user_id from LogIn
+        studentId = getIntent().getIntExtra("user_id", -1);
 
-        userId = getIntent().getIntExtra("user_id", -1);
-
-        Button btnSearch   = findViewById(R.id.btnSearchByCourse);
+        Button btnSearch = findViewById(R.id.btnSearchByCourse);
         Button btnRequests = findViewById(R.id.btnMyRequests);
         Button btnPastRate = findViewById(R.id.btnPastRate);
 
-        // 1) Search by Course → StudentFindSlots
+        // Search by Course -> StudentFindSlots
         btnSearch.setOnClickListener(v -> {
             Intent i = new Intent(StudentHome.this, StudentFindSlots.class);
-            i.putExtra("user_id", userId);
+            i.putExtra("user_id", studentId);
             startActivity(i);
         });
 
-        // 2) My Requests / Sessions → StudentRequests
+        // My Requests / Sessions
         btnRequests.setOnClickListener(v -> {
             Intent i = new Intent(StudentHome.this, StudentRequests.class);
-            i.putExtra("user_id", userId);
+            i.putExtra("user_id", studentId);
             startActivity(i);
         });
 
-        // 3) Past Sessions & Rate Tutor → StudentPast
+        // Past Sessions & Rate Tutor
         btnPastRate.setOnClickListener(v -> {
             Intent i = new Intent(StudentHome.this, StudentPast.class);
-            i.putExtra("user_id", userId);
+            i.putExtra("user_id", studentId);
             startActivity(i);
         });
     }
 }
+

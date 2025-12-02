@@ -13,17 +13,25 @@ import java.util.Locale;
 public class FindSlotsAdapter extends RecyclerView.Adapter<FindSlotsAdapter.VH> {
 
     public static class Item {
-        public long slotId, tutorId;
-        public String date, start, end;
+        public long slotId;
+        public long tutorId;
+        public String date;
+        public String start;
+        public String end;
         public boolean isManual;
         public String tutorName;
         public float avgRating;
+        public String course;   // course filter that matched, if any
 
-        public Item(long slotId, long tutorId,
-                    String date, String start, String end,
+        public Item(long slotId,
+                    long tutorId,
+                    String date,
+                    String start,
+                    String end,
                     boolean isManual,
                     String tutorName,
-                    float avgRating) {
+                    float avgRating,
+                    String course) {
             this.slotId = slotId;
             this.tutorId = tutorId;
             this.date = date;
@@ -32,8 +40,11 @@ public class FindSlotsAdapter extends RecyclerView.Adapter<FindSlotsAdapter.VH> 
             this.isManual = isManual;
             this.tutorName = tutorName;
             this.avgRating = avgRating;
+            this.course = course;
         }
     }
+
+
 
 
     public interface OnRequest { void run(Item it); }
@@ -54,26 +65,29 @@ public class FindSlotsAdapter extends RecyclerView.Adapter<FindSlotsAdapter.VH> 
     public void onBindViewHolder(@NonNull VH h, int pos) {
         Item it = data.get(pos);
 
-        // Build rating text
         String ratingText;
         if (it.avgRating <= 0f) {
             ratingText = "no ratings yet";
         } else {
-            ratingText = String.format(Locale.US, "%.1f★", it.avgRating);
+            ratingText = String.format(java.util.Locale.US, "%.1f★", it.avgRating);
         }
 
-        // Line 1 → Tutor Name + Rating + Manual/Auto Tag
+        String coursePart = (it.course == null || it.course.isEmpty())
+                ? ""
+                : " • " + it.course;
+
         h.line1.setText(
-                it.tutorName + " (" + ratingText + ") • " +
-                        (it.isManual ? "Manual approval" : "Auto")
+                it.tutorName + " (" + ratingText + ")" +
+                        coursePart +
+                        " • " + (it.isManual ? "Manual" : "Auto")
         );
 
-        // Line 2 → Date + Time
         h.line2.setText(it.date + "   " + it.start + " - " + it.end);
 
-        // Request button
         h.btnRequest.setOnClickListener(v -> onRequest.run(it));
+
     }
+
 
 
     @Override public int getItemCount() { return data.size(); }
