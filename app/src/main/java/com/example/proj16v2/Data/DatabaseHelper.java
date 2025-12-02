@@ -576,20 +576,18 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
     // Filtered version: optional course filter
+    // Filtered version: optional course filter
     public Cursor getOpenSlots(@androidx.annotation.Nullable String courseFilter) {
-        // today (so we don't show past slots)
         String today = new java.text.SimpleDateFormat("yyyy-MM-dd",
                 java.util.Locale.US).format(new java.util.Date());
 
-        // A slot is "open" if:
-        // - there is NO Session with same tutor/date/start (requested/approved)
-        // - date is today or later
         StringBuilder sql = new StringBuilder(
                 "SELECT a.slot_id, a.tutor_id, a.date, a.start_time, a.end_time, a.is_manual_approval " +
                         "FROM AvailabilitySlots a " +
                         "LEFT JOIN Sessions s ON s.tutor_id = a.tutor_id " +
                         "  AND s.date = a.date " +
                         "  AND s.start_time = a.start_time " +
+                        "LEFT JOIN Users u ON u.user_id = a.tutor_id " +
                         "WHERE s.session_id IS NULL " +
                         "  AND a.date >= ? "
         );
@@ -597,15 +595,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         java.util.List<String> args = new java.util.ArrayList<>();
         args.add(today);
 
-        // If we have a course filter, require that the tutor teaches that course
+        // If we have a course filter, require that the tutor's coursesOffered contains it
         if (courseFilter != null && !courseFilter.isEmpty()) {
-            sql.append(
-                    "AND EXISTS ( " +
-                            "  SELECT 1 FROM TutorCourses tc " +
-                            "  WHERE tc.tutor_id = a.tutor_id " +
-                            "    AND tc.course_name LIKE ? " +
-                            ") "
-            );
+            sql.append("AND u.coursesOffered LIKE ? ");
             args.add("%" + courseFilter + "%");
         }
 
@@ -616,6 +608,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 args.toArray(new String[0])
         );
     }
+
 
     public String getTutorCoursesCsv(long tutorId) {
         android.database.Cursor c = getReadableDatabase().query(
@@ -704,6 +697,24 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return exists;
     }
 
+    // Returns the comma-separated list of courses this tutor offers
+    public String getCoursesOfferedForTutor(long tutorId) {
+        Cursor c = getReadableDatabase().query(
+                "Users",
+                new String[]{"coursesOffered"},
+                "user_id=?",
+                new String[]{String.valueOf(tutorId)},
+                null, null, null
+        );
+        String result = "";
+        if (c != null) {
+            if (c.moveToFirst()) {
+                result = c.getString(0);
+            }
+            c.close();
+        }
+        return result;
+    }
 
 
 

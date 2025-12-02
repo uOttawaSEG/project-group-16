@@ -88,10 +88,17 @@ public class StudentFindSlots extends AppCompatActivity {
                 String tutorName = db.getUserFullName((int) tutorId);
                 float avgRating  = db.getAverageRatingForTutor(tutorId);
 
+                // Decide what to display as the course text
+                String courseText = courseFilter;
+                if (courseText == null || courseText.isEmpty()) {
+                    // No specific filter -> show all courses this tutor offers
+                    courseText = db.getCoursesOfferedForTutor(tutorId);
+                }
+
                 items.add(new FindSlotsAdapter.Item(
                         slotId,
                         tutorId,
-                        courseFilter,   // course code for the session
+                        courseText,
                         date,
                         start,
                         end,
@@ -99,6 +106,7 @@ public class StudentFindSlots extends AppCompatActivity {
                         tutorName,
                         avgRating
                 ));
+
             }
             c.close();
         }
